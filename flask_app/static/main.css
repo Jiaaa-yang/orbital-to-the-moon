@@ -1,0 +1,76 @@
+/*
+GENERAL
+ */
+
+/* Main theme for webpage */
+.dark {
+    background-color: #0a1931;
+    color: #feddbe;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+/* Contrasting text for emphasis */
+.highlight {
+    color: #ffc947;
+}
+
+/*
+HOME PAGE
+ */
+
+/* Main section for homepage */
+.homepage-main {
+    padding: 10% 2.5%;
+}
+
+.homepage-title {
+    font-size: 3rem;
+    padding-bottom: 2.5%;
+}
+
+.homepage-hook {
+    font-size: 2rem;
+}
+
+/*
+RESULTS PAGE
+ */
+ 
+ /* Labelling for stock ticker */
+.ticker-label {
+    color: #feddbe;
+    font-size: 2.1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    padding: 2% 2.5%;
+}
+
+.result-display {
+    background-color: #185adb;
+    width: 20rem;
+    height: 15rem;
+}
+
+.result-text {
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.media-posts {
+    padding: 3% 2%;
+    font-size: 1.5rem;
+}
+
+/*
+BOOTSTRAP OVERRIDING
+ */
+
+/* Change style of nav link to that of main theme */
+.nav-link {
+    color: #feddbe;
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+}
