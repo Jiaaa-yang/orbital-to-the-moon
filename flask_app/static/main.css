@@ -34,6 +34,26 @@ HOME PAGE
     font-size: 2rem;
 }
 
+/* Search bar */
+.search {
+	align-items: center;
+}
+
+.search button {
+	color: white;
+}
+
+.search button:hover {
+	background: #0e2446;
+}
+
+.alert {
+	color: white;
+	font-size: 0.8rem;
+	font-weight: 400;
+}
+
+
 /*
 RESULTS PAGE
  */
