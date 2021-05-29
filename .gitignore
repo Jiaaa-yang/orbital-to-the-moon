@@ -36,3 +36,6 @@ ENV/
 
 # VSCode
 .vscode/
+
+# VS
+.vs/
