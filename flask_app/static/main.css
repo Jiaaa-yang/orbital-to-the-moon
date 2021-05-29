@@ -83,6 +83,56 @@ RESULTS PAGE
     font-size: 1.5rem;
 }
 
+/* Buttons for graph selection */
+.flex-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: space-around;
+    -ms-flex-line-pack: distribute;
+    align-content: space-around;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.flex-item {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    }
+
+.flex-container button {
+    background-color: #0a1931;
+    color: #feddbe;
+	border-style: none;
+}
+
+.flex-container button:hover {
+	text-decoration: underline;
+	text-decoration-thickness: 0.15rem;
+}
+
+.show {
+	text-decoration: underline;
+	text-decoration-thickness: 0.15rem;
+}
+
 /*
 BOOTSTRAP OVERRIDING
  */

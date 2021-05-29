@@ -21,23 +21,44 @@
 
   <div class="container-fluid row">
     <div class="col-lg-4 media-posts">
-        <h2 class="highlight">Top tweets</h2>
-        <ul>
-          <li>Microsoft Corporation announces acquisition of...<a href=""> [Full Post]</a></li>
-          <li>Microsoft to report earnings on...<a href=""> [Full Post]</a></li>
-        </ul>
+      <h2 class="highlight">Top tweets</h2>
+      <ul>
+        <li>Microsoft Corporation announces acquisition of...<a href=""> [Full Post]</a></li>
+        <li>Microsoft to report earnings on...<a href=""> [Full Post]</a></li>
+      </ul>
     </div>
     <div class="col-lg-4 media-posts">
-        <h2 class="highlight">Top reddit posts</h2>
-        <ul>
-          <li>Microsoft to attend technology conference at...<a href=""> [Full Post]</a></li>
-        </ul>
+      <h2 class="highlight">Top reddit posts</h2>
+      <ul>
+        <li>Microsoft to attend technology conference at...<a href=""> [Full Post]</a></li>
+      </ul>
     </div>
     <div class="col-lg-4 media-posts">
-        <h2 class="highlight">Top news</h2>
-        <ul>
-          <li>A company at a great price: Microsoft Corporation<a href=""> [Full Post]</a></li>
-        </ul>
+      <h2 class="highlight">Top news</h2>
+      <ul>
+        <li>A company at a great price: Microsoft Corporation<a href=""> [Full Post]</a></li>
+      </ul>
     </div>
   </div>
+
+  <br>
+  <div class="flex-container">
+	  <div>
+	    <button onclick="document.getElementById('graph').src='static/images/msft_year.png'" class="col-lg-1 flex-item">Year</button>
+	  </div>
+	  <div class="flex-item"> | </div>
+	  <div>
+	    <button onclick="document.getElementById('graph').src='static/images/msft_month.png'" class="col-lg-1 flex-item">Month</button>
+	  </div>
+	  <div class="flex-item"> | </div>
+	  <div>
+	    <button onclick="document.getElementById('graph').src='static/images/msft_week.png'" class="col-lg-1 flex-item show">Week</button>
+	  </div>
+  </div>
+  
+  <br>
+  <div class="flex-container">
+    <img id="graph" src="static/images/msft_week.png" class="img-fluid" alt="Graph of MSFT stock">
+  </div>
+  <br>
 {% endblock %}
