@@ -11,40 +11,45 @@ GENERAL
     font-weight: 500;
 }
 
-/* Contrasting text for emphasis */
 .highlight {
     color: #ffc947;
 }
 
+.header-link {
+    color: #feddbe;
+    font-size: 1.1rem;
+    font-weight: 100;
+}
+
 /*
-HOME PAGE
+HOMEPAGE
  */
 
-/* Main section for homepage */
-.homepage-main {
+/* Custom padding for main content in homepage  */
+#homepage-content {
     padding: 10% 2.5%;
 }
 
-.homepage-title {
+#homepage-title {
     font-size: 3rem;
     padding-bottom: 2.5%;
 }
 
-.homepage-hook {
+#homepage-hook {
     font-size: 2rem;
 }
 
 /* Search bar */
 .search {
-	align-items: center;
+    align-items: center;
 }
 
 .search button {
-	color: white;
+    color: white;
 }
 
 .search button:hover {
-	background: #0e2446;
+    background: #0e2446;
 }
 
 .alert {
@@ -53,16 +58,14 @@ HOME PAGE
 	font-weight: 400;
 }
 
-
 /*
-RESULTS PAGE
+ANALYSIS PAGE
  */
  
  /* Labelling for stock ticker */
 .ticker-label {
     color: #feddbe;
     font-size: 2.1rem;
-    font-family: 'Montserrat', sans-serif;
     font-weight: 100;
     padding: 2% 2.5%;
 }
@@ -80,7 +83,7 @@ RESULTS PAGE
 
 .media-posts {
     padding: 3% 2%;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 /* Buttons for graph selection */
@@ -131,16 +134,4 @@ RESULTS PAGE
 .show {
 	text-decoration: underline;
 	text-decoration-thickness: 0.15rem;
-}
-
-/*
-BOOTSTRAP OVERRIDING
- */
-
-/* Change style of nav link to that of main theme */
-.nav-link {
-    color: #feddbe;
-    font-size: 1.1rem;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 100;
 }

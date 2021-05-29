@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <!-- Label for stock currently showing results for -->
   <p class="ticker-label">Showing results for: Microsoft Corporation (NYSE:MSFT)</p>
+  <!-- Two square cards for emphasis of main results -->
   <div class="container-fluid row text-center">
     <div class="col-lg-6 d-flex justify-content-center">
       <div class="card result-display">
@@ -19,28 +21,31 @@
     </div>
   </div>
 
+  <!-- Section for analysis of social media posts -->
   <div class="container-fluid row">
     <div class="col-lg-4 media-posts">
       <h2 class="highlight">Top tweets</h2>
       <ul>
-        <li>Microsoft Corporation announces acquisition of...<a href=""> [Full Post]</a></li>
-        <li>Microsoft to report earnings on...<a href=""> [Full Post]</a></li>
+        <li>Microsoft Corporation announces plan to continue producing products for remote work...
+          <a href="https://twitter.com/CNBCTechCheck/status/1395767461228814336" target="_blank">[Full Post]</a></li>
+        <li>Microsoft to report earnings on... <a href="">[Full Post]</a></li>
       </ul>
     </div>
     <div class="col-lg-4 media-posts">
       <h2 class="highlight">Top reddit posts</h2>
       <ul>
-        <li>Microsoft to attend technology conference at...<a href=""> [Full Post]</a></li>
+        <li>Microsoft to attend technology conference at... <a href="">[Full Post]</a></li>
       </ul>
     </div>
     <div class="col-lg-4 media-posts">
       <h2 class="highlight">Top news</h2>
       <ul>
-        <li>A company at a great price: Microsoft Corporation<a href=""> [Full Post]</a></li>
+        <li>A company at a great price: Microsoft Corporation <a href="">[Full Post]</a></li>
       </ul>
     </div>
   </div>
 
+  <!-- Section for showing of price movements of given stock -->
   <br>
   <div class="flex-container">
 	  <div>

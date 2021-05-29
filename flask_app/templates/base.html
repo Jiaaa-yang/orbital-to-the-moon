@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To The Moon</title>
 
-  <!-- jQuery and Javascript -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="static/myscripts.js"></script>
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <!-- Custom CSS -->
@@ -30,16 +27,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item px-4">
-              <a class="nav-link active" aria-current="page" href="{{ url_for('main.home') }}">Home</a>
+              <a class="nav-link header-link" aria-current="page" href="{{ url_for('index.home') }}">Home</a>
             </li>
             <li class="nav-item px-4">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link header-link" href="#">About</a>
             </li>
             <li class="nav-item px-4">
-              <a class="nav-link" href="#">AI</a>
+              <a class="nav-link header-link" href="#">Our AI</a>
             </li>
             <li class="nav-item px-4">
-              <a class="nav-link" href="#">Contact Us</a>
+              <a class="nav-link header-link" href="#">Contact Us</a>
             </li>
           </ul>
         </div>
@@ -47,12 +44,16 @@
     </nav>
   </header>
 
-  <!-- Content section -->
+  <!-- Main content section -->
   <section>
     {% block content %}{% endblock %}
   </section>
 
   <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+  <!-- jQuery and custom Javascript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="static/myscripts.js"></script>
 </body>
 </html>

@@ -1,23 +1,13 @@
+"""
+Blueprint for sentiment analysis for given stocks
+"""
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, flash
+    Blueprint, redirect, render_template, flash
 )
 
-bp = Blueprint('main', __name__)
 
-@bp.route('/', methods=('GET', 'POST'))
-def home():
-    if request.method == 'POST':
-        ticker = request.form['ticker']
-        print(ticker)
-        return result(ticker)
-
-    return render_template('index.html')
-
-
-@bp.route('/results')
-def result(search_str):
-	results = []
-	TOP_TRADED_SYMBOLS = {'MARA', 'M', 'LGHL', 'SU', 'PALI', 'PSFE', 'ABR', 'QS', 'JD', 'ATOS', 'VZ', 'BSX', 'VIAC', 'TSLA', 'BB', 'NOK',
+bp = Blueprint('analysis', __name__)
+TOP_TRADED_SYMBOLS = {'MARA', 'M', 'LGHL', 'SU', 'PALI', 'PSFE', 'ABR', 'QS', 'JD', 'ATOS', 'VZ', 'BSX', 'VIAC', 'TSLA', 'BB', 'NOK',
                      'INTC', 'AAPL', 'IQ', 'QCOM', 'AAL', 'EDU', 'OPGN', 'VTNR', 'RKT', 'VRM', 'FCX', 'TWTR', 'SOS', 'MS', 'EWZ', 'NKLA',
                      'F', 'BAC', 'NRZ', 'XLE', 'MDRR', 'TECK', 'BP', 'ING', 'AZN', 'IDEX', 'LI', 'MVIS', 'RBLX', 'AJG', 'GOLD', 'CSPR',
                      'TELL', 'FSR', 'JMIA', 'ACB', 'KO', 'NCLH', 'FB', 'CVX', 'SIRI', 'MGM', 'VIPS', 'T', 'TME', 'PLUG', 'RMED', 'APPS',
@@ -31,11 +21,14 @@ def result(search_str):
                      'RIOT', 'FCEL', 'EYES', 'MRO', 'XPEV', 'BABA', 'BOX', 'EEM', 'AMC', 'BA', 'PBR', 'PSTG', 'UUUU', 'BIL', 'KOS', 'TLRY', 'FUTU', 
                      'PG', 'CMCSA', 'LHDX', 'AUTL', 'AMD', 'VALE', 'XLF', 'QQQ', 'JPM', 'SKLZ', 'GEVO', 'GME', 'SQ', 'UMC', 'KGC', 'NNDM', 'PFE',
                      'MRNA', 'GM', 'SNOW'}
-	
-	if search_str in TOP_TRADED_SYMBOLS:
-		return render_template('results.html') 
 
-	if search_str != "":
+
+@bp.route('/analysis')
+def analysis(symbol):
+	if symbol in TOP_TRADED_SYMBOLS:
+		return render_template('analysis.html') 
+
+	if symbol != "":
 		flash('No matching company listing found')
 		return redirect('/')
 
