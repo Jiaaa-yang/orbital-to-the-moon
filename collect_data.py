@@ -27,20 +27,26 @@ from threading import Thread
 import sys
 
 # List of top traded/most active symbols to get data for
-TOP_TRADED_SYMBOLS = {'MARA', 'M', 'LGHL', 'SU', 'PALI', 'PSFE', 'ABR', 'QS', 'JD', 'ATOS', 'VZ', 'BSX', 'VIAC', 'TSLA', 'BB', 'NOK',
-                     'INTC', 'AAPL', 'IQ', 'QCOM', 'AAL', 'EDU', 'OPGN', 'VTNR', 'RKT', 'VRM', 'FCX', 'TWTR', 'SOS', 'MS', 'EWZ', 'NKLA',
-                     'F', 'BAC', 'NRZ', 'XLE', 'MDRR', 'TECK', 'BP', 'ING', 'AZN', 'IDEX', 'LI', 'MVIS', 'RBLX', 'AJG', 'GOLD', 'CSPR',
-                     'TELL', 'FSR', 'JMIA', 'ACB', 'KO', 'NCLH', 'FB', 'CVX', 'SIRI', 'MGM', 'VIPS', 'T', 'TME', 'PLUG', 'RMED', 'APPS',
-                     'WISH', 'SNAP', 'CPE', 'DKNG', 'DIS', 'RMO', 'DDD', 'IWM', 'UEC', 'WKHS', 'FUBO', 'CCIV', 'MT', 'TIGR', 'GE', 'ZNGA',
-                     'HRTX', 'MU', 'SONO', 'NEM', 'JNJ', 'MSFT', 'EBON', 'BBVA', 'HBAN', 'NKE', 'FHN', 'BRFS', 'C', 'AMWL', 'UWMC', 'AMAT', 
-                     'BILI', 'HL', 'OPEN', 'CPNG', 'NIO', 'ARRY', 'AHT', 'WFC', 'BMBL', 'FAMI', 'SQQQ', 'CTRM', 'SOXL', 'CRIS', 'ARKK', 'NERV',
-                     'GLW', 'LUV', 'SPY', 'SAN', 'IBM', 'ITUB', 'SPCE', 'GNW', 'KEY', 'CCL', 'CSCO', 'FSLY', 'TSM', 'PTON', 'AUY', 'CS', 
-                     'HPQ', 'LMND', 'FSM', 'GSK', 'LTHM', 'CNHI', 'AGNC', 'SID', 'TAL', 'AEG', 'LU', 'PYPL', 'EXK', 'UAL', 'PAAS', 'MRK', 
-                     'CAN', 'XOM', 'UBER', 'ET', 'AR', 'WY', 'OCGN', 'HAL', 'NVDA', 'X', 'SNDL', 'BNGO', 'BNTC', 'IHT', 'GGB', 'RIG', 'BIDU', 
-                     'SRNG', 'ON', 'FTEK', 'OXY', 'NLY', 'COIN', 'BBD', 'COP', 'TQQQ', 'PINS', 'DAL', 'SLB', 'CLF', 'SI', 'PLTR', 'HAE', 'KMI', 
-                     'RIOT', 'FCEL', 'EYES', 'MRO', 'XPEV', 'BABA', 'BOX', 'EEM', 'AMC', 'BA', 'PBR', 'PSTG', 'UUUU', 'BIL', 'KOS', 'TLRY', 'FUTU', 
-                     'PG', 'CMCSA', 'LHDX', 'AUTL', 'AMD', 'VALE', 'XLF', 'QQQ', 'JPM', 'SKLZ', 'GEVO', 'GME', 'SQ', 'UMC', 'KGC', 'NNDM', 'PFE',
-                     'MRNA', 'GM', 'SNOW'}
+TOP_TRADED_SYMBOLS = {'AUY', 'F', 'NAKD', 'NCLH', 'ET', 'TJX', 'CS', 'AGNC', 'FAMI', 'CPE', 'CRIS', 'GSAT', 'GME', 'OPGN',
+                      'NIO', 'KR', 'ON', 'BILI', 'AAL', 'FUTU', 'GEVO', 'PSTG', 'KGC', 'SCHW', 'ABT', 'XLF', 'MPW', 'NNDM',
+                      'TPR', 'TSLA', 'AZN', 'MRVL', 'BABA', 'MOSY', 'SONO', 'ABR', 'HRTX', 'WY', 'TFC', 'LUMN', 'VST', 'CSPR',
+                      'EXK', 'RLX', 'BIDU', 'HIMX', 'MPC', 'NERV', 'WPG', 'BRFS', 'GOTU', 'T', 'UWMC', 'KOS', 'PEAK', 'CLDR',
+                      'RMED', 'FSR', 'UEC', 'TQQQ', 'BSX', 'CLNE', 'AR', 'MARA', 'SRNE', 'SID', 'TLRY', 'VTRS', 'CX', 'ADMP',
+                      'GFI', 'AES', 'VIPS', 'SAN', 'BP', 'IHT', 'NOK', 'MU', 'EDU', 'TRGP', 'FSM', 'WISH', 'STAY', 'DIS', 'HL',
+                      'SPY', 'ARRY', 'C', 'FHN', 'BBBY', 'BMY', 'FCX', 'MO', 'M', 'QFIN', 'MGM', 'MS', 'ORCL', 'UAL', 'DOCU', 'BBVA',
+                      'IWM', 'INFY', 'CPNG', 'CVE', 'SOS', 'CCIV', 'ACST', 'PBR', 'GNW', 'IPOE', 'BNTC', 'MOS', 'LHDX', 'VRM', 'ENB', 'WFC',
+                      'UMC', 'LUV', 'MRK', 'ACB', 'AMXVF', 'CNHI', 'QCOM', 'SOXL', 'NLY', 'IQ', 'CCL', 'CSCO', 'MVIS', 'CAN', 'SNAP', 'CMCSA',
+                      'ZNGA', 'EWZ', 'AEG', 'CLOV', 'NCTY', 'NOKPF', 'GOLD', 'SNDL', 'COIN', 'BA', 'LEDS', 'PD', 'ATOS', 'VIAC', 'TNXP', 'CLF',
+                      'MT', 'SPCE', 'EYES', 'NKLA', 'SYF', 'GLW', 'STLA', 'PSFE', 'NUAN', 'FTEK', 'HPQ', 'ABNB', 'PAAS', 'JBLU', 'HAL', 'PALI',
+                      'JD', 'DKNG', 'AHT', 'ITUB', 'LMND', 'SLB', 'DISCA', 'TIGR', 'BOX', 'IDEX', 'GILD', 'KEY', 'PG', 'ERIC', 'JPM', 'HBAN',
+                      'DAL', 'MRO', 'UUUU', 'PSTH', 'GGB', 'OXY', 'FEYE', 'RIDE', 'GM', 'RF', 'PLTR', 'FUBO', 'AMC', 'COG', 'AAPL', 'LI', 'OPEN',
+                      'VALE', 'UPST', 'GSK', 'DBX', 'WKHS', 'SDC', 'SQ', 'CRWD', 'LTHM', 'JMIA', 'DDD', 'ZOM', 'QQQ', 'SI', 'NKE', 'EEM', 'DVN',
+                      'XOM', 'RIG', 'INTC', 'BAC', 'WMB', 'TAL', 'KO', 'FB', 'FSLY', 'GPS', 'SQQQ', 'AMAT', 'X', 'HPE', 'JNJ', 'VZ', 'NEE', 'QS',
+                      'PTON', 'ABEV', 'AMWL', 'CLNY', 'MDRR', 'BBD', 'FTI', 'ZM', 'SRNG', 'CRM', 'PBR-A', 'VTNR', 'COP', 'PCG', 'UBER', 'TWTR', 'AJG',
+                      'CTRM', 'SENS', 'ARKK', 'BMBL', 'TSM', 'LVS', 'ING', 'XPEV', 'MRNA', 'IBM', 'AMCR', 'PYPL', 'PFE', 'EBON', 'GE', 'PINS', 'HAE',
+                      'SU', 'RBLX', 'PLUG', 'BNGO', 'BIL', 'TME', 'TEVA', 'NEM', 'SIRI', 'AUTL', 'NVDA', 'FCEL', 'NRZ', 'LGHL', 'SWN', 'LU', 'KMI',
+                      'RIOT', 'TELL', 'LPTH', 'MSFT', 'SKLZ', 'CVX', 'AMD', 'UAA', 'EBAY', 'RMO', 'AEO', 'MAC', 'VEON', 'OCGN', 'XLE', 'TECK', 'SNOW',
+                      'APA', 'RKT', 'BKR', 'BB', 'APPS'}
 
 def main():
     if len(sys.argv) != 2:

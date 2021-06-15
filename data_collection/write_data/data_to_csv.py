@@ -1,5 +1,6 @@
 import os.path
 import pandas as pd
+import csv
 
 class DataToCSV:
     """
@@ -76,7 +77,7 @@ class DataToCSV:
             else: 
                 raise AttributeError("Keys of data do not match field names of csv file")
         
-        self.df.to_csv(self.file, index=False)
+        self.df.to_csv(self.file, index=False, quoting=csv.QUOTE_NONNUMERIC)
         return rows_written
 
 

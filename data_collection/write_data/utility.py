@@ -45,7 +45,7 @@ def generate_data_stream(stock_symbols, api_call, delay):
         for data in generator:
             yield data
         time.sleep(delay)
-        # Progres tracking for every 25 symbols processed for self use
+        # Progress tracking for every 25 symbols processed for self use
         symbols_processed += 1
         if symbols_processed % 25 == 0:
             print(f"{symbols_processed} symbols have been processed")
