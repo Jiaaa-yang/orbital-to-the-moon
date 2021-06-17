@@ -63,11 +63,11 @@ def main():
             # Get financial tweets and reddit posts on even days
             # Get reddit data on separate thread for better performance, since main thread 
             # has to wait for twitter api rate limit
-            write_reddit_thread = Thread(target=write_reddit_data, args=(TOP_TRADED_SYMBOLS,))
-            write_reddit_thread.start()
+            # write_reddit_thread = Thread(target=write_reddit_data, args=(TOP_TRADED_SYMBOLS,))
+            # write_reddit_thread.start()
             write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="mixed", query_type="financial", file="financial_tweets_both.csv")
             write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="popular", query_type="financial", file="financial_tweets_popular.csv")
-            write_reddit_thread.join()
+            # write_reddit_thread.join()
             logger.info("=================LAST LOGGED: FINANCIAL TWITTER AND REDDIT DATA=================")
         elif arg == "prices":
             # Write prices data when needed, since data spans over a period of 5 months
