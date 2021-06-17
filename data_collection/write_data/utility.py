@@ -2,16 +2,20 @@ import logging
 import time
 
 def create_logger(name, filename='data_collection.log'):
-    """
-    Utility function to instantiate logger to log data written
-    in the same format
+    """Create a logger instance to log to log files.
 
-    Parameters:
-        name (str): name of logger to instantiate
-        filename (str), optional: file to log data to
+    Utility function to instantiate logger to allow different
+    functions to create their own instance and log to the same
+    file in the same format.
+
+    Args:
+        name (str): Name of logger to instantiate
+        filename (str, optional): File to log data to,
+            defaults to 'data_collection.log'
 
     Returns:
-        Logger object for logging of data written
+        Logger object to log to given file
+
     """
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
@@ -26,18 +30,22 @@ def create_logger(name, filename='data_collection.log'):
 
 
 def generate_data_stream(stock_symbols, api_call, delay):
-    """
-    Utility function to generate data stream using the api
+    """Get data stream from api calls.
 
-    Parameters:
-        stock_symbols (set): set of stock symbols to generate data for
-        api_call (function): unary function which takes in a single stock
-        symbol and yields the required data from the api_calls
-        delay (int): time delay to add to adhere to api rate limits
+    Utility function to generate data stream by passing
+    each symbol in stock_symbols to the api_call which takes in
+    a single symbol as parameter and returns the appropriate data.
+
+    Args:
+        stock_symbols (set): Set of stock symbols to generate data for
+        api_call (function): Unary function which takes in a single stock
+            symbol and yields the required data from the api_calls
+        delay (int): Time delay to add between each call to adhere to rate limits
 
     Yields:
-        Data stream consisting of data returned by api calls for
-        every stock ticker in stock_symbols        
+        dict: Data stream consisting of data returned by api calls for
+            every stock ticker in stock_symbols        
+
     """
     symbols_processed = 0
     for stock in stock_symbols:
@@ -45,7 +53,7 @@ def generate_data_stream(stock_symbols, api_call, delay):
         for data in generator:
             yield data
         time.sleep(delay)
-        # Progress tracking for every 25 symbols processed for self use
+        # Progress tracking for every 25 symbols processed
         symbols_processed += 1
         if symbols_processed % 25 == 0:
             print(f"{symbols_processed} symbols have been processed")

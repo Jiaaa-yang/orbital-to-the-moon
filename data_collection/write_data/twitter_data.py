@@ -1,26 +1,28 @@
-from tweepy import api
 from .data_to_csv import DataToCSV
 from .utility import create_logger, generate_data_stream
-from ..api.twitter import get_tweets
+from ..api.twitter import get_financial_tweets
 
-def write_twitter_data(stock_symbols, result_type, query_type, file):
-    """
-    Write reddit posts data for given set of stock symbols to csv file
+def write_twitter_data(stock_symbols, result_type, file):
+    """Write twitter data for given set of symbols.
 
+    Write twitter data for every symbol in given set of 
+    stock_symbols into the given csv file. Twitter data can be 
+    separated by result_type, which can be 'popular' which fetches 
+    popular tweets only, or 'mixed' which fetches both popular and
+    recently posted tweets.
+    
     Parameters:
-        stock_symbols (set): set of stock symbols to get reddit data for
-        result_type (str): type of tweets to get, either 'mixed' or 'popular'
-        query_type (str): type of query to search twitter api with, either
-        'mixed' or 'financial'
+        stock_symbols (set): Set of stock symbols to get twitter data for
+        result_type (str): Type of tweets to get, either 'mixed' or 'popular'
         file (str): csv file to write to
     
     Raises:
-        ValueError if query or result type is not supported
+        ValueError: If result_type is not 'popular' or 'mixed'
+
     """
-    # Check if query_type and result_type are of the supported values
-    supported_query_type = {"mixed", "financial"}
+    result_type = result_type.lower()
     supported_result_type = {"mixed", "popular"}
-    if (query_type not in supported_query_type) or (result_type not in supported_result_type):
+    if result_type not in supported_result_type:
         raise ValueError("Invalid query or result type")
 
     logger = create_logger(__name__)
@@ -33,7 +35,7 @@ def write_twitter_data(stock_symbols, result_type, query_type, file):
         data_to_csv = DataToCSV(file=file, field_names=field_names, unique_identifiers=unique_identifiers)
         # Use lambda expression for api_call which takes in a unary function that accepts a symbol
         # Get 15 tweets per symbol, and add no delay as tweepy api automatically waits on rate limit
-        api_call = lambda symbol: get_tweets(symbol=symbol, query_type=query_type, result_type=result_type, n_items=15)
+        api_call = lambda symbol: get_financial_tweets(symbol=symbol, result_type=result_type, n_items=15)
         data_stream = generate_data_stream(stock_symbols=stock_symbols, api_call=api_call, delay=0)
         rows_written = data_to_csv.write(data_stream)
         logger.info(f"{rows_written} rows written to {file}")

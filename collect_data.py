@@ -1,29 +1,28 @@
-"""
-Runner file to collect given data. Designed as a command line script
-to collect different sets of data on different period.
+"""Runner module to collect data from APIs to store into csv files
+
+Module designed as command line script which can collect different data
+based on the frequencies they need to be updated. Can be called with either
+'tweets' or 'prices' as a command line argument.
 
 Recommended usage:
     Call the script with a command line argument:
-        'odd': writes mixed twitter data
-        'even': writes financial twitter and reddit data
-        'prices': writes prices data
+        'tweets': Writes financial twitter data
+        'prices': Writes prices data
     
     To prevent large amount of duplicates as a result of identical
-    search queries, call the script on alternate days. Prices data span
-    over 5 months period, so such data can be written when needed, or every
-    5 months time
+    search queries, collect the twitter data once a day.
+    Since the prices data span over a 5 months period, such data
+    can be written when needed.
 
-    Manually call the script on alternate days depending on a odd or even day
-    of the month, or a task scheduler such as cronjob can be used
+    Manually call the script daily or use a task scheduler like cronjob
+
 """
 from dotenv import load_dotenv
 load_dotenv()
 
-from data_collection.write_data.reddit_data import write_reddit_data
 from data_collection.write_data.twitter_data import write_twitter_data
 from data_collection.write_data.prices_data import write_prices_data
 from data_collection.write_data.utility import create_logger
-from threading import Thread
 import sys
 
 # List of top traded/most active symbols to get data for
@@ -54,27 +53,16 @@ def main():
     else:
         arg = sys.argv[1].lower()
         logger = create_logger(__name__)
-        if arg == "odd":
-            # Get mixed: informative and financial tweets on odd days
-            write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="mixed", query_type="mixed", file="mixed_tweets_both.csv")
-            write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="popular", query_type="mixed", file="mixed_tweets_popular.csv")
-            logger.info("=================LAST LOGGED: MIXED TWITTER DATA=================")
-        elif arg == "even":
-            # Get financial tweets and reddit posts on even days
-            # Get reddit data on separate thread for better performance, since main thread 
-            # has to wait for twitter api rate limit
-            # write_reddit_thread = Thread(target=write_reddit_data, args=(TOP_TRADED_SYMBOLS,))
-            # write_reddit_thread.start()
-            write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="mixed", query_type="financial", file="financial_tweets_both.csv")
-            write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="popular", query_type="financial", file="financial_tweets_popular.csv")
-            # write_reddit_thread.join()
-            logger.info("=================LAST LOGGED: FINANCIAL TWITTER AND REDDIT DATA=================")
+        if arg == "tweets":
+            write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="mixed", file="financial_tweets_mixed.csv")
+            write_twitter_data(stock_symbols=TOP_TRADED_SYMBOLS, result_type="popular", file="financial_tweets_popular.csv")
+            logger.info("=================LAST LOGGED: TWITTER DATA=================")
         elif arg == "prices":
             # Write prices data when needed, since data spans over a period of 5 months
             write_prices_data(TOP_TRADED_SYMBOLS)
             logger.info("=================LAST LOGGED: PRICES DATA=================")
         else:
-            print("Invalid argument: must be one of 'odd', 'even' or 'prices'")
+            print("Invalid argument: must be either 'tweets' or 'prices'")
 
 
 if __name__ == "__main__":

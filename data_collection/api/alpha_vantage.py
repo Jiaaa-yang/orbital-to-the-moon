@@ -4,17 +4,20 @@ from os import getenv
 api = TimeSeries(getenv("ALPHAVANTAGE_API_KEY"))
 
 def get_daily_price(symbol):
-    """
-    Get prices data for given symbol, for up to past 100 data points
+    """Get prices data for given symbol.
 
-    Parameters:
-        symbol (str): symbol of stock to query tweets for
+    Get daily adjusted closing price data for given symbol
+    using AlphaVantage API, for up to past 100 data points.
+
+    Args:
+        symbol (str): Symbol of stock to get prices data for
 
     Yields:
-        Price data in dictionary form with following keys:
+        dict: Price data with the following keys:
         'date': date associated with current data
         'symbol': symbol associated with current data
         'adjusted_close': adjusted closing price of given symbol on given date
+
     """
     prices_data, _ = api.get_daily_adjusted(symbol=symbol, outputsize="compact")
     for key, value in prices_data.items():

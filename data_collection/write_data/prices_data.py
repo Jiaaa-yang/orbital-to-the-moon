@@ -3,12 +3,15 @@ from .utility import create_logger, generate_data_stream
 from ..api.alpha_vantage import get_daily_price
 
 def write_prices_data(stock_symbols, file="prices_data.csv"):
-    """
-    Write prices data for given set of stock symbols to csv file
+    """Write prices data for given set of symbols.
 
-    Parameters:
-        stock_symbols (set): set of stock symbols to get prices data for
-        file (str), optional: csv file to write to
+    Write adjusted closing prices data for every symbol in given
+    set of stock_symbols into the given csv file.
+
+    Args:
+        stock_symbols (set): Set of stock symbols to get prices data for
+        file (str, optional): Csv file to write to. Defaults to 'prices_data.csv'
+
     """
     logger = create_logger(__name__)
     # Prices data consist of date, symbol and adjusted close, and are considered
