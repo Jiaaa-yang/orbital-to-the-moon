@@ -1,6 +1,7 @@
 import tweepy
 from os import getenv
 
+
 CONSUMER_KEY = getenv("TWITTER_CONSUMER_KEY")
 CONSUMER_SECRET = getenv("TWITTER_CONSUMER_SECRET")
 ACCESS_TOKEN = getenv("TWITTER_ACCESS_TOKEN")
@@ -31,15 +32,7 @@ def get_financial_tweets(symbol, result_type, n_items):
         'symbol': stock symbol associated with tweet returned
         'tweet': text of tweet retrieved
 
-    Raises:
-        ValueError: If result_type is not 'mixed' or 'popular'
-
     """
-    result_type = result_type.lower()
-    supported_result_types = {"mixed", "popular"}
-    if result_type not in supported_result_types:
-        raise ValueError("Invalid result type")
-
     # Query for twitter API to be symbol prepended with a '$' sign to get financial tweets
     query = f"${symbol} -filter:retweets"
     tweets = tweepy.Cursor(api.search, q=query, lang="en", result_type=result_type, tweet_mode="extended").items(n_items)

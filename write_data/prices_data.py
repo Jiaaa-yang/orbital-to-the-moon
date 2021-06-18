@@ -1,6 +1,7 @@
 from .data_to_csv import DataToCSV
 from .utility import create_logger, generate_data_stream
-from ..api.alpha_vantage import get_daily_price
+from api.alpha_vantage_api import get_daily_price
+
 
 def write_prices_data(stock_symbols, file="prices_data.csv"):
     """Write prices data for given set of symbols.

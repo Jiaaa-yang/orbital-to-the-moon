@@ -17,13 +17,11 @@ Recommended usage:
     Manually call the script daily or use a task scheduler like cronjob
 
 """
-from dotenv import load_dotenv
-load_dotenv()
-
-from data_collection.write_data.twitter_data import write_twitter_data
-from data_collection.write_data.prices_data import write_prices_data
-from data_collection.write_data.utility import create_logger
+from write_data.twitter_data import write_twitter_data
+from write_data.prices_data import write_prices_data
+from write_data.utility import create_logger
 import sys
+
 
 # List of top traded/most active symbols to get data for
 TOP_TRADED_SYMBOLS = {'AUY', 'F', 'NAKD', 'NCLH', 'ET', 'TJX', 'CS', 'AGNC', 'FAMI', 'CPE', 'CRIS', 'GSAT', 'GME', 'OPGN',

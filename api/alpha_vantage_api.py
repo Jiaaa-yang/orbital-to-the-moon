@@ -1,7 +1,8 @@
 from alpha_vantage.timeseries import TimeSeries
 from os import getenv
 
-api = TimeSeries(getenv("ALPHAVANTAGE_API_KEY"))
+
+api = TimeSeries(key=getenv("ALPHAVANTAGE_API_KEY"))
 
 def get_daily_price(symbol):
     """Get prices data for given symbol.

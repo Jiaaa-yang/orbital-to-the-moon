@@ -1,6 +1,6 @@
 from .data_to_csv import DataToCSV
 from .utility import create_logger, generate_data_stream
-from ..api.twitter import get_financial_tweets
+from api.twitter_api import get_financial_tweets
 
 def write_twitter_data(stock_symbols, result_type, file):
     """Write twitter data for given set of symbols.
@@ -25,7 +25,7 @@ def write_twitter_data(stock_symbols, result_type, file):
     if result_type not in supported_result_type:
         raise ValueError("Invalid query or result type")
 
-    logger = create_logger(__name__)
+    logger = create_logger(__name__ + "_" + result_type)
     # Twitter data consist of id, date, symbol and tweet, and are considered
     # duplicates if id of tweets are the same
     field_names = ["id", "date", "symbol", "tweet"]
