@@ -1,7 +1,6 @@
 from flask import Flask
 from os import getenv
-from .views import home
-from .views import analysis
+from .views import home, analysis
 
 
 def create_app():

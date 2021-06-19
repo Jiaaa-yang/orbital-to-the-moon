@@ -1,6 +1,3 @@
-"""
-Blueprint for sentiment analysis for given stocks
-"""
 from flask import (
     Blueprint, redirect, render_template, flash
 )

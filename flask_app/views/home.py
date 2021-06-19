@@ -1,6 +1,3 @@
-"""
-Blueprint for homepage of application
-"""
 from flask import (
     Blueprint, render_template, request
 )
