@@ -1,5 +1,5 @@
-"""
-Runner module to start flask application
+"""Runner module to start flask application
+
 """
 from dotenv import load_dotenv
 load_dotenv()

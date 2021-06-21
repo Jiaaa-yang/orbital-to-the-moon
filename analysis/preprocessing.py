@@ -129,7 +129,8 @@ def clean_tweets_list(tweets_list):
     """
     filtered_tweets = []
     for tweet in tweets_list:
-        tweet['tweet'] = clean_text(tweet['tweet'])
-        filtered_tweets.append(tweet)
+        copy = tweet.copy()
+        copy['tweet'] = clean_text(tweet['tweet'])
+        filtered_tweets.append(copy)
 
     return filtered_tweets

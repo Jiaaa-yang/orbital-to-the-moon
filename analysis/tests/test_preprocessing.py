@@ -5,7 +5,7 @@ from ..preprocessing import (
 
 class TestPreprocessing(unittest.TestCase):
 
-    def test_bot_tweets_removed_correctly(self):
+    def test_remove_bot_tweets(self):
         # Test data with a few tweets containing bot phrases
         normal_tweet_one = {'id': 0, 'date': '2000-01-01', 'symbol': 'AMD', 'tweet': 'normal tweet one'}
         bot_tweet_one = {'id': 0, 'date': '2000-01-01', 'symbol': 'AMD', 'tweet': 'sec alert new trade'}
@@ -17,7 +17,7 @@ class TestPreprocessing(unittest.TestCase):
         self.assertCountEqual(actual_filtered_tweets, expected_tweets)
 
 
-    def test_multiple_symbols_tweets_removed_correctly(self):
+    def test_remove_multiple_symbol_tweets(self):
         # Test data with a few tweets containing multiple symbols
         tweet_one = {'id': 0, 'date': '2000-01-01', 'symbol': 'AMD', 'tweet': '$MSFT $AAPL $AMZN big three'}
         tweet_two = {'id': 0, 'date': '2000-01-01', 'symbol': 'AMD', 'tweet': '$AMD good action'}
@@ -28,7 +28,7 @@ class TestPreprocessing(unittest.TestCase):
         self.assertCountEqual(actual_filtered_tweets, expected_tweets)
 
 
-    def test_text_content_cleaned(self):
+    def test_clean_tweets_list(self):
         # Test data with a few tweets containing multiple symbols
         tweets = [{'id': 0, 
                    'date': '2000-01-01', 
@@ -38,3 +38,15 @@ class TestPreprocessing(unittest.TestCase):
         actual_text = cleaned_tweets[0]['tweet']
         expected_text = "$ msft go up in price action"
         self.assertEqual(actual_text, expected_text)
+
+
+    def test_clean_tweets_list_does_not_change_original_data(self):
+        # Test data with a few tweets containing multiple symbols
+        original_text = '$MSFT going up in price action https://twitter.com/user/status/1402982617490903040'
+        tweets = [{'id': 0, 
+                   'date': '2000-01-01', 
+                   'symbol': 'AMD', 
+                   'tweet': original_text}]
+        clean_tweets_list(tweets) 
+        text_in_data = tweets[0]['tweet']
+        self.assertEqual(text_in_data, original_text)
