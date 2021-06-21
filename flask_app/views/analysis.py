@@ -23,19 +23,28 @@ def analysis(symbol):
     price_movement_prediction = "RISE" if analysis['price_rise'] else "FALL"
     confidence_level = "{:.2f}".format(analysis['confidence_level'])
     bullish_tweets = analysis['bullish_tweets']
+    bearish_tweets = analysis['bearish_tweets']
 
     # Get up to 3 most bullish tweets to display and truncate their text
     # to 12 words long, and construct their link from id
     num_display_tweets = 3
     text_len = 12
-    display_tweets = []
+    bullish_tweets_display = []
+    bearish_tweets_display = []
 
     for i in range(min(num_display_tweets, len(bullish_tweets))):
         tweet = bullish_tweets[i]
         text = tweet['tweet'].split()
         truncated_text = " ".join(text[:min(len(text), text_len)]) + "..."
         tweet_link = f"https://twitter.com/user/status/{tweet['id']}"
-        display_tweets.append({'text': truncated_text, 'link': tweet_link})
+        bullish_tweets_display.append({'text': truncated_text, 'link': tweet_link})
+
+    for i in range(min(num_display_tweets, len(bearish_tweets))):
+        tweet = bearish_tweets[i]
+        text = tweet['tweet'].split()
+        truncated_text = " ".join(text[:min(len(text), text_len)]) + "..."
+        tweet_link = f"https://twitter.com/user/status/{tweet['id']}"
+        bearish_tweets_display.append({'text': truncated_text, 'link': tweet_link})
 
     return render_template('analysis.html', symbol=symbol, company_name=company_name, prediction=price_movement_prediction,
-    confidence_level=confidence_level, display_tweets=display_tweets)
+    confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, bearish_tweets=bearish_tweets_display)

@@ -1,5 +1,5 @@
 import unittest
-from ..models import predict_price_movement, get_bullish_tweets
+from ..models import predict_price_movement, get_top_tweets
 
 class TestPreprocessing(unittest.TestCase):
 
@@ -22,15 +22,11 @@ class TestPreprocessing(unittest.TestCase):
         self.assertLessEqual(confidence_level, 100)
 
     
-    def test_get_bullish_tweets_confidence_score_sorted(self):
-        bullish_tweets = get_bullish_tweets(self.test_tweets)
-        confidence_scores = [index_confidence_pair[1] for index_confidence_pair in bullish_tweets]
-        is_sorted = all([confidence_scores[i] <= confidence_scores[i + 1] for i in range(len(confidence_scores) - 1)])
-        self.assertTrue(is_sorted)
-
-    
-    def test_get_bullish_tweets_returns_valid_index(self):
-        bullish_tweets = get_bullish_tweets(self.test_tweets)
+    def test_get_top_tweets_returns_valid_index(self):
+        bullish_tweets, bearish_tweets = get_top_tweets(self.test_tweets)
         valid_indexes = range(len(self.test_tweets))
-        for index, _ in bullish_tweets:
+        for index in bullish_tweets:
+            self.assertIn(index, valid_indexes)
+
+        for index in bearish_tweets:
             self.assertIn(index, valid_indexes)

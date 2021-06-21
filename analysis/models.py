@@ -46,32 +46,37 @@ def predict_price_movement(tweets_list):
     return prediction, confidence_level
 
 
-def get_bullish_tweets(tweets_list):
-    """Get list of bullish tweets from given tweets list.
+def get_top_tweets(tweets_list):
+    """Get list of top bullish and bearish tweets from given tweets list.
 
-    Get the indexes of subset from given tweets that are labelled bullish by tweet labeller.
-    The tweets returned contain the confidence score for their labels, and are sorted
-    such that the first element contains the tweet with the highest confidence score.
+    Get the indexes of subset from given tweets that have the highest confidence level
+    of being bullish and bearish. The returned list for each bullish and bearish tweets
+    are sorted such that the first element contains the tweet with the highest confidence
+    score to be bullish/bearish respectively.
 
     Args:
         tweets_list (iterator): Iterable of tweets in a dictionary form,
             with given keys: 'id', 'date', 'symbol', 'tweet'
 
     Returns: 
-        list: List of tuple containing two elements. The first is the index corresponding
-            to the tweet in the original list. The second is the confidence score of the
-            label of the tweet. The list returned contains the indexes of subset of the given list
-            that have a bullish label, and are sorted by confidence score in descending order
+        tuple: Tuple with 2 elements, the first is the indexes of bullish tweets sorted with 
+            the most bullish tweet being the first element, and the second is the indexes of
+            the sorted list of bearish tweets
 
     """
     text = [tweet['tweet'] for tweet in tweets_list]
     tfidf_matrix = vectorizer.transform(text)
     
     bullish_tweets_indexes = []
+    bearish_tweets_indexes = []
     for index, vector in enumerate(tfidf_matrix):
         label = text_labeller.predict(vector)[0]
+        confidence_score = abs(text_labeller.decision_function(vector)[0])
         if label == BULLISH:
-            confidence_score = text_labeller.decision_function(vector)[0]
             bullish_tweets_indexes.append((index, confidence_score))
+        elif label == BEARISH:
+            bearish_tweets_indexes.append((index, confidence_score))
     
-    return sorted(bullish_tweets_indexes, key=lambda pair: pair[1])
+    bullish_tweets = [index for index, _ in sorted(bullish_tweets_indexes, key=lambda pair: pair[1])]
+    bearish_tweets = [index for index, _ in sorted(bearish_tweets_indexes, key=lambda pair: pair[1])]
+    return bullish_tweets, bearish_tweets

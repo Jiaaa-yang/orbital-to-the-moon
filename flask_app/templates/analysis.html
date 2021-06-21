@@ -24,9 +24,9 @@
   <!-- Section for analysis of social media posts -->
   <div class="container-fluid row">
     <div class="col-lg-4 media-posts">
-      <h2 class="highlight">Top tweets</h2>
+      <h2 class="highlight">Top bullish tweets</h2>
       <ul>
-        {% for tweet in display_tweets %}
+        {% for tweet in bullish_tweets %}
           <li>
             {{ tweet.get('text') }} <a href={{ tweet.get("link") }} target="_blank">[Full Post]</a>
           </li>
@@ -34,9 +34,13 @@
       </ul>
     </div>
     <div class="col-lg-4 media-posts">
-      <h2 class="highlight">Top reddit posts</h2>
+      <h2 class="highlight">Top bearish posts</h2>
       <ul>
-        <li>Microsoft to attend technology conference at... <a href="">[Full Post]</a></li>
+        {% for tweet in bearish_tweets %}
+          <li>
+            {{ tweet.get('text') }} <a href={{ tweet.get("link") }} target="_blank">[Full Post]</a>
+          </li>
+        {% endfor %}
       </ul>
     </div>
     <div class="col-lg-4 media-posts">
