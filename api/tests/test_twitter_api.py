@@ -24,7 +24,7 @@ class TestTwitterAPI(unittest.TestCase):
             try:
                 datetime.strptime(date, "%Y-%m-%d")
             except ValueError:
-                self.fail("Date passed in is not in YYYY-MM-DD format")
+                self.fail("Date is not in YYYY-MM-DD format")
 
 
     def test_correct_symbol(self):

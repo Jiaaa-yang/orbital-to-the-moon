@@ -1,4 +1,5 @@
 from analysis.tweets_analysis import analyse_symbol
+from api.mediastack_api import get_financial_news
 from flask import (
     Blueprint, redirect, render_template, flash
 )
@@ -46,5 +47,17 @@ def analysis(symbol):
         tweet_link = f"https://twitter.com/user/status/{tweet['id']}"
         bearish_tweets_display.append({'text': truncated_text, 'link': tweet_link})
 
+    # Get 5 most recent financial news about the symbol to display
+    num_display_news = 5
+    news_display = []
+    financial_news = list(get_financial_news(symbol, num_display_news))
+    for i in range(min(num_display_news, len(financial_news))):
+        title = financial_news[i]['title'].split()
+        truncated_title = " ".join(title[:min(len(title), text_len)]) + "..."
+        link = financial_news[i]['url']
+        news_display.append({'title': truncated_title, 'link': link})
+    
+
     return render_template('analysis.html', symbol=symbol, company_name=company_name, prediction=price_movement_prediction,
-    confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, bearish_tweets=bearish_tweets_display)
+    confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, bearish_tweets=bearish_tweets_display,
+    news=news_display)

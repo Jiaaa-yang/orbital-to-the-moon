@@ -46,7 +46,11 @@
     <div class="col-lg-4 media-posts">
       <h2 class="highlight">Top news</h2>
       <ul>
-        <li>A company at a great price: Microsoft Corporation <a href="">[Full Post]</a></li>
+        {% for article in news %}
+          <li>
+            {{ article.get('title') }} <a href={{ article.get("link") }} target="_blank">[Full Post]</a>
+          </li>
+        {% endfor %}
       </ul>
     </div>
   </div>
