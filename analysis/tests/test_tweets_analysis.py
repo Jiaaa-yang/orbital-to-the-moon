@@ -1,6 +1,7 @@
 import unittest
 from ..tweets_analysis import analyse_symbol
 
+
 class TestTweetsAnalysis(unittest.TestCase):
 
     def setUp(self):
@@ -8,14 +9,16 @@ class TestTweetsAnalysis(unittest.TestCase):
         self.analysis = analyse_symbol(self.test_symbol)
 
 
-    def test_analyse_symbols_price_rise_is_boolean(self):
-        price_rise = self.analysis['price_rise']
-        self.assertIsInstance(price_rise, bool)
+    def test_analyse_symbols_returns_dictionary(self):
+        self.assertIsInstance(self.analysis, dict)
 
 
-    def test_analyse_symbols_bullish_tweets_dictionary_keys(self):
-        bullish_tweets = self.analysis['bullish_tweets']
-        expected_keys = {'id', 'date', 'symbol', 'tweet'}
-        for tweet in bullish_tweets:
-            actual_keys = set(tweet.keys())
-            self.assertEqual(actual_keys, expected_keys)
+    def test_analyse_symbols_is_bullish_is_bool(self):
+        is_bullish = self.analysis['is_bullish']
+        self.assertIsInstance(is_bullish, bool)
+
+
+    def test_analyse_symbols_has_correct_dictionary_keys(self):
+        actual_keys = set(self.analysis.keys())
+        expected_keys = {'is_bullish', 'confidence_level', 'bullish_tweets', 'bearish_tweets'}
+        self.assertEqual(actual_keys, expected_keys)

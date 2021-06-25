@@ -6,7 +6,6 @@ from .analysis import analysis
 
 bp = Blueprint('index', __name__)
 
-
 @bp.route('/', methods=('GET', 'POST'))
 def home():
     if request.method == 'POST':

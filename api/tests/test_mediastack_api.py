@@ -1,26 +1,25 @@
 import unittest
-from api import mediastack_api
+from api import mediastack_api, article
 from datetime import datetime
 
 
 class TestMediastackAPI(unittest.TestCase):
 
-    def setUp(self):
-        # Get financial news data for arbitrary stock symbol and result types
+    @classmethod
+    def setUpClass(self):
+        # Get arbitrary news data for one single API call to use for test cases
         self.test_symbol = "MSFT"
-        self.data = mediastack_api.get_financial_news(symbol=self.test_symbol, n_items=3)
+        self.data = list(mediastack_api.get_financial_news(symbol=self.test_symbol, n_items=3))
 
 
-    def test_returned_dictionary_keys(self):
-        tweet_keys = next(self.data).keys()
-        expected_keys = {'title', 'description', 'date', 'symbol', 'url'}
-        self.assertEqual(set(tweet_keys), expected_keys)
+    def test_get_financial_news_return_list_of_article_objects(self):
+        for data in self.data:
+            self.assertIsInstance(data, article.Article)
 
 
-    def test_correct_date_format(self):
-        # Test for YYYY-MM-DD format for date field in dictionary returned
+    def test_get_financial_news_returned_article_has_date_in_YYYY_MM_DD_format(self):
         for article in self.data:
-            date = article['date']
+            date = article.date
             try:
                 datetime.strptime(date, "%Y-%m-%d")
             except ValueError:

@@ -1,16 +1,25 @@
 import unittest
-from ..models import predict_price_movement, get_top_tweets
+from api.tweet import Tweet
+from ..models import predict_price_movement, get_top_tweets, clean_text
 
-class TestPreprocessing(unittest.TestCase):
+
+class TestModels(unittest.TestCase):
 
     def setUp(self):
-        tweet_one = {'id': 0, 'date': '2000-01-01', 'symbol': 'AMD', 'tweet': '$MSFT $AAPL $AMZN big three'}
-        tweet_two = {'id': 0, 'date': '2000-01-01', 'symbol': 'AMD', 'tweet': '$AMD good action'}
-        tweet_three = {'id': 0, 'date': '2000-01-01', 'symbol': 'AMD', 'tweet': '$MSFT $MSFT is good'}
+        tweet_one = Tweet(id='', date='', symbol='', text='$MSFT $AAPL $AMZN big three')
+        tweet_two = Tweet(id='', date='', symbol='', text='$AMD good action')
+        tweet_three = Tweet(id='', date='', symbol='', text='$MSFT $MSFT is good')
         self.test_tweets = [tweet_one, tweet_two, tweet_three]
 
 
-    def test_predict_price_movement_prediction_is_binary(self):
+    def clean_text_removes_link_lowercase_words_and_lemmatizes(self):
+        test_text = '$MSFT going up in price action https://twitter.com/user/status/1402982617490903040'
+        actual_text = clean_text(test_text)
+        expected_text = "$ msft go up in price action"
+        self.assertEqual(actual_text, expected_text)
+
+
+    def test_predict_price_movement_prediction_is_binary_value_of_0_or_1(self):
         prediction, _ = predict_price_movement(self.test_tweets) 
         expected_values = [0, 1]
         self.assertIn(prediction, expected_values)
@@ -22,11 +31,15 @@ class TestPreprocessing(unittest.TestCase):
         self.assertLessEqual(confidence_level, 100)
 
     
-    def test_get_top_tweets_returns_valid_index(self):
-        bullish_tweets, bearish_tweets = get_top_tweets(self.test_tweets)
-        valid_indexes = range(len(self.test_tweets))
-        for index in bullish_tweets:
-            self.assertIn(index, valid_indexes)
+    def test_get_top_tweets_returns_tuple(self):
+        top_tweets = get_top_tweets(self.test_tweets)
+        self.assertIsInstance(top_tweets, tuple)
 
-        for index in bearish_tweets:
-            self.assertIn(index, valid_indexes)
+
+    def test_get_top_tweets_tuple_element_are_list_of_tweet_objects(self):
+        bullish_tweets, bearish_tweets = get_top_tweets(self.test_tweets)
+        for item in bullish_tweets:
+            self.assertIsInstance(item, Tweet)
+
+        for item in bearish_tweets:
+            self.assertIsInstance(item, Tweet)

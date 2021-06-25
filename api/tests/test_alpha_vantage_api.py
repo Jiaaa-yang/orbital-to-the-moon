@@ -5,29 +5,30 @@ from datetime import datetime
 
 class TestAlphaVantageAPI(unittest.TestCase):
 
-    def setUp(self):
-        # Get prices data for arbitrary stock symbol
+    @classmethod
+    def setUpClass(self):
+        # Get prices data for arbitrary stock symbol with one API call
         self.test_symbol = "MSFT"
-        self.data = alpha_vantage_api.get_daily_price(self.test_symbol)
+        self.data = list(alpha_vantage_api.get_daily_price(self.test_symbol))
 
 
-    def test_returned_dictionary_keys(self):
-        price_data_keys = next(self.data).keys()
+    def test_get_daily_prices_return_dictionary_with_expected_keys(self):
         expected_keys = {'date', 'symbol', 'adjusted_close'}
-        self.assertEqual(set(price_data_keys), expected_keys)
+        for data in self.data:
+            actual_keys = set(data.keys())
+            self.assertEqual(actual_keys, expected_keys)
 
 
-    def test_correct_date_format(self):
-        # Test for YYYY-MM-DD format for date field in dictionary returned
+    def test_get_daily_prices_return_date_in_YYYY_MM_DD_format(self):
         for price_data in self.data:
             date = price_data['date']
             try:
                 datetime.strptime(date, "%Y-%m-%d")
             except ValueError:
-                self.fail("Date passed in is not in YYYY-MM-DD format")
+                self.fail("Date is not in YYYY-MM-DD format")
                 
 
-    def test_correct_symbol(self):
-        price_data = next(self.data)
-        price_data_symbol = price_data['symbol']
-        self.assertEqual(price_data_symbol, self.test_symbol)
+    def test_get_daily_prices_return_prices_for_correct_symbol(self):
+        for data in self.data:
+            actual_symbol = data['symbol']
+            self.assertEqual(actual_symbol, self.test_symbol)

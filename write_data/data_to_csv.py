@@ -2,6 +2,7 @@ import os.path
 import pandas as pd
 import csv
 
+
 class DataToCSV:
     """Represents a class to write a stream of data to csv file.
 

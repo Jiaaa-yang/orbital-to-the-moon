@@ -21,43 +21,37 @@ def analysis(symbol):
     analysis = analyse_symbol(symbol)
 
     company_name = stock_info['shortName']
-    price_movement_prediction = "RISE" if analysis['price_rise'] else "FALL"
+    price_movement_prediction = "RISE" if analysis['is_bullish'] else "FALL"
     confidence_level = "{:.2f}".format(analysis['confidence_level'])
     bullish_tweets = analysis['bullish_tweets']
     bearish_tweets = analysis['bearish_tweets']
 
-    # Get up to 3 most bullish tweets to display and truncate their text
-    # to 12 words long, and construct their link from id
-    num_display_tweets = 3
-    text_len = 12
+    # Get up to 5 items to display for each section and pass them
+    # as a list of dictionary with relevant data
+    n_display = 5
     bullish_tweets_display = []
     bearish_tweets_display = []
 
-    for i in range(min(num_display_tweets, len(bullish_tweets))):
+    for i in range(min(n_display, len(bullish_tweets))):
         tweet = bullish_tweets[i]
-        text = tweet['tweet'].split()
-        truncated_text = " ".join(text[:min(len(text), text_len)]) + "..."
-        tweet_link = f"https://twitter.com/user/status/{tweet['id']}"
-        bullish_tweets_display.append({'text': truncated_text, 'link': tweet_link})
+        bullish_tweets_display.append({'text': tweet.get_truncated_text(),
+                                       'link': tweet.get_link()})
 
-    for i in range(min(num_display_tweets, len(bearish_tweets))):
+    for i in range(min(n_display, len(bearish_tweets))):
         tweet = bearish_tweets[i]
-        text = tweet['tweet'].split()
-        truncated_text = " ".join(text[:min(len(text), text_len)]) + "..."
-        tweet_link = f"https://twitter.com/user/status/{tweet['id']}"
-        bearish_tweets_display.append({'text': truncated_text, 'link': tweet_link})
+        bearish_tweets_display.append({'text': tweet.get_truncated_text(),
+                                       'link': tweet.get_link()})
+
 
     # Get 5 most recent financial news about the symbol to display
-    num_display_news = 5
-    news_display = []
-    financial_news = list(get_financial_news(symbol, num_display_news))
-    for i in range(min(num_display_news, len(financial_news))):
-        title = financial_news[i]['title'].split()
-        truncated_title = " ".join(title[:min(len(title), text_len)]) + "..."
-        link = financial_news[i]['url']
-        news_display.append({'title': truncated_title, 'link': link})
+    financial_news = list(get_financial_news(symbol, n_display))
+    news_article_display = []
+    for i in range(min(n_display, len(financial_news))):
+        article = financial_news[i]
+        news_article_display.append({'title': article.get_truncated_title(),
+                                     'link': article.url})
     
 
     return render_template('analysis.html', symbol=symbol, company_name=company_name, prediction=price_movement_prediction,
     confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, bearish_tweets=bearish_tweets_display,
-    news=news_display)
+    news=news_article_display)

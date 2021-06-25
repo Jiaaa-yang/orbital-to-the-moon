@@ -1,6 +1,7 @@
 import http.client, urllib.parse
 from os import getenv
 from datetime import datetime, timedelta
+from api.article import Article
 import json
 
 
@@ -8,7 +9,7 @@ import json
 conn = http.client.HTTPConnection('api.mediastack.com')
 api_key = getenv("NEWS_API_KEY")
 
-# We will fix the query for news article to be at most 1 week old for now
+# We will fix the query for news article to be at most 1 week old
 TODAY = datetime.now()
 WEEK_AGO = TODAY - timedelta(days=7)
 
@@ -24,12 +25,9 @@ def get_financial_news(symbol, n_items):
         n_items (int): Max number of news to return per query
 
     Yields:
-        dict: News data with the following keys:
-        'title': title of current news article
-        'description': description of current news article
-        'date': date the article was published at
-        'symbol': stock symbol associated with news data returned
-        'url': url to the original news article
+        Article object which contains the title, published date and 
+        description of the news article, the symbol the article is associated
+        with, and the url to the original article
 
     """
     search_params = urllib.parse.urlencode({
@@ -47,8 +45,5 @@ def get_financial_news(symbol, n_items):
     news_articles = json.loads(data)['data']
 
     for article in news_articles:
-        yield {'title': article['title'],
-                'description': article['description'],
-                'date': article['published_at'].split("T")[0],
-                'symbol': symbol,
-                'url': article['url']}
+        yield Article(title=article['title'], description=article['description'],
+                      date=article['published_at'].split("T")[0], symbol=symbol, url=article['url'])

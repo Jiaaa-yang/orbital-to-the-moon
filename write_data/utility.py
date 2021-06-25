@@ -1,6 +1,7 @@
 import logging
 import time
 
+
 def create_logger(name, filename='data_collection.log'):
     """Create a logger instance to log to log files.
 

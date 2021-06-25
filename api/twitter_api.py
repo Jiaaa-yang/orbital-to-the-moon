@@ -1,4 +1,5 @@
 import tweepy
+from api.tweet import Tweet
 from os import getenv
 
 
@@ -26,18 +27,11 @@ def get_financial_tweets(symbol, result_type, n_items):
         n_items (int): Max number of tweets to return per query
 
     Yields:
-        dict: Tweets with the following keys:
-        'id': id of tweet
-        'date': date where tweet was created, in YYYY-MM-DD format
-        'symbol': stock symbol associated with tweet returned
-        'tweet': text of tweet retrieved
-
+        Tweet object which contains the tweet id, date of tweet, symbol
+            the tweet is associated with, and the text content
     """
     # Query for twitter API to be symbol prepended with a '$' sign to get financial tweets
     query = f"${symbol} -filter:retweets"
     tweets = tweepy.Cursor(api.search, q=query, lang="en", result_type=result_type, tweet_mode="extended").items(n_items)
     for tweet in tweets:
-        yield {'id': tweet.id,
-               'date': tweet.created_at.strftime("%Y-%m-%d"),
-               'symbol': symbol,
-               'tweet': tweet.full_text}
+        yield Tweet(id=tweet.id, date=tweet.created_at.strftime("%Y-%m-%d"), symbol=symbol, text=tweet.full_text)
