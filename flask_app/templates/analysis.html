@@ -27,8 +27,8 @@
       <h2 class="highlight">Top bullish tweets</h2>
       <ul>
         {% for tweet in bullish_tweets %}
-          <li>
-            {{ tweet.get('text') }} <a href={{ tweet.get("link") }} target="_blank">[Full Post]</a>
+          <li class="py-2">
+            {{ tweet.get('text') }} <a href={{ tweet.get("link") }} target="_blank">[Full tweet]</a>
           </li>
         {% endfor %}
       </ul>
@@ -37,8 +37,8 @@
       <h2 class="highlight">Top bearish tweets</h2>
       <ul>
         {% for tweet in bearish_tweets %}
-          <li>
-            {{ tweet.get('text') }} <a href={{ tweet.get("link") }} target="_blank">[Full Post]</a>
+          <li class="py-2">
+            {{ tweet.get('text') }} <a href={{ tweet.get("link") }} target="_blank">[Full tweet]</a>
           </li>
         {% endfor %}
       </ul>
@@ -47,8 +47,8 @@
       <h2 class="highlight">Top news</h2>
       <ul>
         {% for article in news %}
-          <li>
-            {{ article.get('title') }} <a href={{ article.get("link") }} target="_blank">[Full Post]</a>
+          <li class="py-2">
+            {{ article.get('title') }} <a href={{ article.get("link") }} target="_blank">[Link]</a>
           </li>
         {% endfor %}
       </ul>

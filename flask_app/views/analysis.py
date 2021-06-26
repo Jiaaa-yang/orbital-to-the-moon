@@ -10,7 +10,6 @@ bp = Blueprint('analysis', __name__)
 
 @bp.route('/analysis')
 def analysis(symbol):
-    symbol = symbol.upper()
     stock_info = yf.Ticker(symbol).info
     
     if len(stock_info) == 1:

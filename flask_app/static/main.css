@@ -21,6 +21,10 @@ GENERAL
     font-weight: 100;
 }
 
+.hide {
+    display: none;
+}
+
 /*
 HOMEPAGE
  */

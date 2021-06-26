@@ -14,11 +14,14 @@
     <div class="col-lg-8 justify-content-center">
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <form method="POST">
+          <form id="search-form" method="POST">
             <div class="form-group search">
               <div class="input-group">
                 <input autocomplete="off" type="text" name="ticker" class="form-control" placeholder="Stock ticker" aria-label="Stock ticker">
-                <button class="btn btn-outline-secondary" type="submit">Analyse</button>
+                <button id="analyse-button" class="btn btn-outline-secondary" type="submit">Analyse</button>
+                <button id="loading-button" class="btn btn-outline-secondary hide" disabled>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...
+                </button>
               </div>
             </div>
           </form>
