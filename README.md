@@ -20,6 +20,9 @@ With the rise of young retail investors who increasingly exchange information on
 
 >*"I am an investor with a long investment horizon holding several stocks. I am not interested in short term price changes, and I do not spend much time on every single news about my stocks. I would want a quick summary to just know the sentiment of recent news articles on my stocks"*
 
+## Aim
+We plan to build a web application that makes stock price change predictions for most traded stocks on Nasdaq<sup>[1](#footnote1)</sup> by analysing social media posts. Our targeted users are beginner investors, as well as savvy investors who wish to capitalize on information from social media to augment their investment choices in as hassle-free a manner as possible.
+
 ## Core Features
 
 ### Frontend:
@@ -35,6 +38,9 @@ A web application that allows users to
 ### Possible Extensions:
 + View a list of stocks with the most bullish sentiment
 + Put stocks on watchlist to track daily changes in sentiment
+
+### User flow diagram
+![User flow diagram](User_flow_diagram.png)
 
 ## Development Timeline
 
@@ -60,3 +66,5 @@ A web application that allows users to
 3. Twitter, Reddit, Alpha Vantage APIs
 4. Machine Learning libraries: Sklearn, Tensorflow
 5. Natural Language libraries: NLTK, SpaCy
+
+<a name="footnote1"><sup>1</sup></a> <sup><sub>The current list of tracked stocks are: AAL AAPL ABEV ABNB ABR ABT ACB ACST ADMP AEG AEO AES AGNC AHT AJG AMAT AMC AMCR AMD AMWL AMXVF APA APPS AR ARKK ARRY ATOS AUTL AUY AZN BA BABA BAC BB BBBY BBD BBVA BIDU BIL BILI BKR BMBL BMY BNGO BNTC BOX BP BRFS BSX C CAN CCIV CCL CLDR CLF CLNE CLNY CLOV CMCSA CNHI COG COIN COP CPE CPNG CRIS CRM CRWD CS CSCO CSPR CTRM CVE CVX CX DAL DBX DDD DIS DISCA DKNG DOCU DVN EBAY EBON EDU EEM ENB ERIC ET EWZ EXK EYES F FAMI FB FCEL FCX FEYE FHN FSLY FSM FSR FTEK FTI FUBO FUTU GE GEVO GFI GGB GILD GLW GM GME GNW GOLD GOTU GPS GSAT GSK HAE HAL HBAN HIMX HL HPE HPQ HRTX IBM IDEX IHT INFY ING INTC IPOE IQ ITUB IWM JBLU JD JMIA JNJ JPM KEY KGC KMI KO KOS KR LEDS LGHL LHDX LI LMND LPTH LTHM LU LUMN LUV LVS M MAC MARA MDRR MGM MO MOS MOSY MPC MPW MRK MRNA MRO MRVL MS MSFT MT MU MVIS NAKD NCLH NCTY NEE NEM NERV NIO NKE NKLA NLY NNDM NOK NOKPF NRZ NUAN NVDA OCGN ON OPEN OPGN ORCL OXY PAAS PALI PBR PBR-A PCG PD PEAK PFE PG PINS PLTR PLUG PSFE PSTG PSTH PTON PYPL QCOM QFIN QQQ QS RBLX RF RIDE RIG RIOT RKT RLX RMED RMO SAN SCHW SDC SENS SI SID SIRI SKLZ SLB SNAP SNDL SNOW SONO SOS SOXL SPCE SPY SQ SQQQ SRNE SRNG STAY STLA SU SWN SYF T TAL TECK TELL TEVA TFC TIGR TJX TLRY TME TNXP TPR TQQQ TRGP TSLA TSM TWTR UAA UAL UBER UEC UMC UPST UUUU UWMC VALE VEON VIAC VIPS VRM VST VTNR VTRS VZ WFC WISH WKHS WMB WPG WY X XLE XLF XOM XPEV ZM ZNGA ZOM</sub></sup>
