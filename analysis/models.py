@@ -52,6 +52,10 @@ def predict_price_movement(tweets_list):
             of the prediction
 
     """
+    # Return default values if there are no available tweets
+    if len(tweets_list) == 0:
+        return 0, 0
+
     # Convert list of tweets into vector of cleaned text content to
     # be transformed by vectorizer
     corpus = [tweet.text for tweet in tweets_list]
@@ -91,6 +95,10 @@ def get_top_tweets(tweets_list):
             sorted list of bearish tweets
 
     """
+    # Return default values if there are no available tweets
+    if len(tweets_list) == 0:
+        return [], []
+
     corpus = [tweet.text for tweet in tweets_list]
     corpus = list(map(clean_text, corpus))
     tfidf_matrix = vectorizer.transform(corpus)
