@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- 'About Us' page content -->
+<div class="container-fluid" id="homepage-content" style="margin-top: -5em;">
+  <div class="row align-items-center">
+     <div class="offset-lg-2 col-lg-8">
+	   <h2 class="highlight">Our Story</h2>
+	   <blockquote class="quote blockquote text-center">
+	     <p class="mb=0">Facts only account for 10% of the reactions on the stock market; 
+		 everything else is psychology.</p>
+		 <footer class="blockquote-footer">Andr&eacute; Kostolany, Stock Market Investor
+	  </blockquote>
+	 </div>
+    <div class="offset-lg-4 col-lg-4">
+	  <img src="https://s.wsj.net/public/resources/images/OG-AE141_Social_J_20150420173657.jpg" 
+	  class="center img-fluid" alt="Stock image of Twitter sentiment analysis">
+	</div>
+
+	<!-- Start of text -->
+	<div class="offset-lg-2 col-lg-8 mt-2">
+	  <p>Ever wished that you were part of the 1000% rally of GameStop's stocks? Or the 800% rally 
+	  of Signal Advance's? Due to a Reddit coordinated short squeeze, and a two word tweet by Elon 
+	  Musk respectively, prices of both stocks skyrocketed in a short period of time.</p>
+	  <p>As with many other industries, the financial industry continues to shape - and to some extent,
+	  is shaped by - information shared on the Internet, especially via social media. And while the 
+	  aforementioned investments can be of high risk, these incidents clearly show the impact social media 
+	  can have on stock prices. We aim to collect such information, mainly in the form of text, from social 
+	  media to find a correlation between this information and change in stock prices and predict short term
+	  price movements.</p>
+	  <p>With the rise of young retail investors who increasingly exchange information on social media, we 
+	  believe that such analysis will become very valuable to understand the market.</p>
+	  <p>To The Moon aims to use natural language processing to process large amounts of social media 
+	  posts on different stocks. By analysing these conversations over the internet, we provide users 
+	  with the general sentiment surrounding the stocks that they wish to invest in.</p>
+	  <h3 class="highlight">How it works</h3>
+	  <img src="{{ url_for('static', filename='images/data_collection.png') }}" class="center img-fluid" alt="Overview of data collection process">
+	  <p>The process begins with data collection. In order to train a machine learning model, we will 
+	  require a large amount of relevant data. In this case, we need financial tweets and prices data 
+	  about various stocks traded. We thus chose a set of 300 most actively traded stocks and used APIs 
+	  from Twitter and Alpha Vantage to get the relevant data. We developed a script that can be run 
+	  regularly to get these data and save them, and allowed us to collect sufficient data for training 
+	  of machine learning models.<p>
+	  <p>We then developed two machine learning models based on the data to predict whether a given
+	  stock will rise or fall using the number of bullish tweets. Currently, both models have an accuracy 
+	  of 61%, but this will be improved upon in further iterations as more data is collected.</p>
+	  <h4>Overview</h4>
+	  <img src="{{ url_for('static', filename='images/project_overview.png') }}" class="center img-fluid" alt="Mechanism overview">
+	</div>
+  </div>
+</div>
+{% endblock %}

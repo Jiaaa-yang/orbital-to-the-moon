@@ -90,6 +90,15 @@ ANALYSIS PAGE
     font-size: 1.4rem;
 }
 
+/*
+ABOUT PAGE
+*/
+
+/* Theme overrides*/
+.quote {
+	color: #6c757d;
+}
+
 /* Buttons for graph selection */
 .flex-container {
     display: -ms-flexbox;

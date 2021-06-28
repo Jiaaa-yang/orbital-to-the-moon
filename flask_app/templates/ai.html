@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- 'About Us' page content -->
+<div class="container-fluid" id="homepage-content" style="margin-top: -5em;">
+  <div class="row align-items-center">
+     <div class="offset-lg-2 col-lg-8">
+	   <h2 class="highlight">More About the AI</h2>
+	 </div>
+    <div class="offset-lg-4 col-lg-4">
+	  <img src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1138781799%2F960x0.jpg" 
+	  class="center img-fluid" alt="Stock image of Twitter sentiment analysis">
+	</div>
+
+	<!-- Start of text -->
+	<div class="offset-lg-2 col-lg-8 mt-2">
+	  <p>We developed two machine learning models:</p>
+	  <ol>
+	    <li>a LinearSVC model that classifies the financial sentiment of the text of a tweet.</li>
+		<li>a Random Forest Classifier which predicts whether the price of a stock will rise or fall, based on the tweets associated with the stock.</li>
+	  </ol>
+	  <p>To pass our text data into the LinearSVC model, we used a bag of words model by transforming 
+	  our corpus into a TF-IDF matrix. This model allows us to predict the financial sentiment of each 
+	  tweet with regards to the stock it is referring to.</p>
+	  <p>The Random Forest Classifier uses the first model to label each tweet associated with a particular stock. Then, 
+	  using the number of positive/bullish tweets on the stock, the model predicts whether this stock will 
+	  rise or fall.</p>
+	  <p>As of the time of writing, both models have an accuracy of about 61% for their binary 
+	  classification task. The accuracy will be worked on as more data is collected.</p>
+	  <p>Further elaboration on the full process of training the two models, as well as the 
+	  exploration of twitter data can be found in the following notebooks:</p>
+	  <ol>
+	    <li><a href="https://www.kaggle.com/lyejiayang/1-twitter-data-exploration">Tweets EDA</a></li>
+		<li><a href="https://www.kaggle.com/lyejiayang/2-tweets-classification">Tweets sentiment classification</a></li>
+		<li><a href="https://www.kaggle.com/lyejiayang/3-stock-price-prediction-with-tweets-sentiment">Stock price prediction</a></li>
+	  </ol>
+	</div>
+  </div>
+</div>
+{% endblock %}
