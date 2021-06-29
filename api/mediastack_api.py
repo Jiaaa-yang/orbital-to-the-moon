@@ -1,4 +1,5 @@
 import http.client, urllib.parse
+from json.decoder import JSONDecodeError
 from os import getenv
 from datetime import datetime, timedelta
 from api.article import Article
@@ -41,8 +42,13 @@ def get_financial_news(symbol, n_items):
 
     conn.request('GET', '/v1/news?{}'.format(search_params))
     response = conn.getresponse()
+
     data = response.read()
-    news_articles = json.loads(data)['data']
+    try:
+        news_articles = json.loads(data)['data']
+    except JSONDecodeError:
+        # Temp fix for milestone 2 demo purposes
+        return []
 
     for article in news_articles:
         yield Article(title=article['title'], description=article['description'],
