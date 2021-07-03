@@ -9,7 +9,7 @@ class TestMediastackAPI(unittest.TestCase):
     def setUpClass(self):
         # Get arbitrary news data for one single API call to use for test cases
         self.test_symbol = "MSFT"
-        self.data = list(mediastack_api.get_financial_news(symbol=self.test_symbol, n_items=3))
+        self.data = mediastack_api.get_financial_news(symbol=self.test_symbol, n_items=3)
 
 
     def test_get_financial_news_return_list_of_article_objects(self):

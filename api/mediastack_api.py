@@ -1,13 +1,12 @@
-import http.client, urllib.parse
 from json.decoder import JSONDecodeError
 from os import getenv
+import requests
 from datetime import datetime, timedelta
 from api.article import Article
-import json
 
 
-# Set up connection with base url of mediastack API
-conn = http.client.HTTPConnection('api.mediastack.com')
+# Define base url for accessing news articles from mediastack api
+news_access_url = "http://api.mediastack.com/v1/news"
 api_key = getenv("NEWS_API_KEY")
 
 # We will fix the query for news article to be at most 1 week old
@@ -25,31 +24,39 @@ def get_financial_news(symbol, n_items):
         symbol (str): Symbol of stock to query tweets for
         n_items (int): Max number of news to return per query
 
-    Yields:
-        Article object which contains the title, published date and 
+    Returns:
+        List of Article objects which contains the title, published date and 
         description of the news article, the symbol the article is associated
         with, and the url to the original article
 
     """
-    search_params = urllib.parse.urlencode({
+    search_params = {
             'access_key': api_key,
             'limit': n_items,
             'keywords': symbol,
             'date': f"{WEEK_AGO.strftime('%Y-%m-%d')},{TODAY.strftime('%Y-%m-%d')}",
             'languages': 'en',
             'sort': 'published_desc'
-        })
+        }
 
-    conn.request('GET', '/v1/news?{}'.format(search_params))
-    response = conn.getresponse()
-
-    data = response.read()
+    response = requests.get(news_access_url, params=search_params)
     try:
-        news_articles = json.loads(data)['data']
+        response_data = response.json()
     except JSONDecodeError:
-        # Temp fix for milestone 2 demo purposes
+        # Check for valid JSON response as mediastack API may return
+        # invalid JSON format occasionally
         return []
 
+
+    if 'error' in response_data:
+        # Mediastack returns a dictionary with a single 'error' key 
+        # when an API request is unsuccessful. 
+        return []
+
+    results = []
+    news_articles = response_data['data']
     for article in news_articles:
-        yield Article(title=article['title'], description=article['description'],
-                      date=article['published_at'].split("T")[0], symbol=symbol, url=article['url'])
+        results.append(Article(title=article['title'], description=article['description'],
+                      date=article['published_at'].split("T")[0], symbol=symbol, url=article['url']))
+
+    return results
