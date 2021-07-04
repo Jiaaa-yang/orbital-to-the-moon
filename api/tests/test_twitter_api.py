@@ -29,3 +29,11 @@ class TestTwitterAPI(unittest.TestCase):
     def test_get_financial_tweets_returned_tweets_has_correct_symbol(self):
         for tweet in self.data:
             self.assertEqual(tweet.symbol, self.test_symbol)
+
+
+    def test_get_financial_tweets_with_returns_only_tweets_in_today_date_range(self):
+        today_tweets = twitter_api.get_financial_tweets(symbol=self.test_symbol, result_type="mixed", n_items=3, date_range="today")
+        expected_date = datetime.today().date()
+        for tweet in today_tweets:
+            actual_date = datetime.strptime(tweet.date, "%Y-%m-%d").date()
+            self.assertEqual(actual_date, expected_date)

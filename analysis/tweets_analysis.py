@@ -27,7 +27,7 @@ def analyse_symbol(symbol):
  
     """
     # Get up to 30 financial tweets on given symbol
-    tweets = get_financial_tweets(symbol=symbol, result_type='mixed', n_items=30)
+    tweets = get_financial_tweets(symbol=symbol, result_type='mixed', n_items=30, date_range="today")
 
     # Perform cleaning to fit into machine learning models
     filtered_tweets = remove_bot_tweets(tweets)

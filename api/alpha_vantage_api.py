@@ -20,7 +20,11 @@ def get_daily_price(symbol):
         'adjusted_close': adjusted closing price of given symbol on given date
 
     """
-    prices_data, _ = api.get_daily_adjusted(symbol=symbol, outputsize="compact")
+    try:
+        prices_data, _ = api.get_daily_adjusted(symbol=symbol, outputsize="compact")
+    except ValueError:
+        return []
+
     for key, value in prices_data.items():
         yield {"date": key,
                "symbol": symbol,
