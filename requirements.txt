@@ -8,6 +8,7 @@ certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
 cymem==2.0.5
+dnspython==1.16.0
 en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0-py3-none-any.whl
 Flask==2.0.1
 gunicorn==20.1.0
@@ -29,6 +30,7 @@ praw==7.2.0
 prawcore==2.0.0
 preshed==3.0.5
 pydantic==1.7.4
+pymongo==3.11.4
 pyparsing==2.4.7
 PySocks==1.7.1
 python-dateutil==2.8.1
