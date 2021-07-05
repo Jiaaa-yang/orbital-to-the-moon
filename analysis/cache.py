@@ -1,4 +1,5 @@
 from os import getenv
+from copy import deepcopy
 from pymongo import MongoClient
 from datetime import datetime
 from api.tweet import Tweet
@@ -6,7 +7,6 @@ from api.tweet import Tweet
 
 client = MongoClient(getenv("MONGODB_URI"))
 cache = client.orbital.cache
-
 
 def add_symbol_analysis(symbol, result):
     """Adds the result of a stock symbol analysis to cache
@@ -26,6 +26,7 @@ def add_symbol_analysis(symbol, result):
             'bearish_tweets': list of top bearish Tweet objects predicted by model
 
     """
+    result = deepcopy(result)
     current_time = datetime.now()
     result['time'] = current_time
 
