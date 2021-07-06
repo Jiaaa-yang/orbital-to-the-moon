@@ -80,6 +80,7 @@ def get_cached_analysis(symbol):
     # unncessary fields and converting tweet attributes back into Tweet object
     del result['time']
     del result['_id']
+    del result['symbol']
     result['bullish_tweets'] = [Tweet(**attributes) for attributes in result['bullish_tweets']]
     result['bearish_tweets'] = [Tweet(**attributes) for attributes in result['bearish_tweets']]
     return True, result
