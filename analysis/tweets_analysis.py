@@ -1,6 +1,7 @@
 from api.twitter_api import get_financial_tweets
 from .preprocessing import remove_bot_tweets, remove_multiple_symbol_tweets
 from .models import predict_price_movement, get_top_tweets
+from .cache import get_cached_analysis, add_symbol_analysis
 
 
 # Labels used by machine learning models
@@ -26,6 +27,10 @@ def analyse_symbol(symbol):
             'bearish_tweets': list of top bearish Tweet objects predicted by model
  
     """
+    is_analysis_cached, analysis = get_cached_analysis(symbol)
+    if is_analysis_cached:
+        return analysis
+
     # Get up to 30 financial tweets on given symbol
     tweets = get_financial_tweets(symbol=symbol, result_type='mixed', n_items=30, date_range="today")
 
@@ -37,9 +42,12 @@ def analyse_symbol(symbol):
     bullish_tweets, bearish_tweets= get_top_tweets(filtered_tweets)
     is_bullish = prediction == BULLISH
 
-    return {
+    result = {
         'is_bullish': is_bullish,
         'confidence_level': confidence_level,
         'bullish_tweets': bullish_tweets,
         'bearish_tweets': bearish_tweets
     }
+
+    add_symbol_analysis(symbol, result)
+    return result
