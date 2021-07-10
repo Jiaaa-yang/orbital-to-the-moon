@@ -1,6 +1,5 @@
 from joblib import load
 import re
-from analysis import nlp
 
 
 # Labels used by machine learning models
@@ -16,8 +15,7 @@ def clean_text(text):
 
     Cleans given text in same form as text was cleaned before
     feeding into machine learning models. Removes links, 
-    tweet account handles, '&amp;'. Also lowercases all words
-    and change all words into their lemma form. 
+    tweet account handles, '&amp;'. Also lowercases all words.
 
     Args:
         text (str): Text content of tweet to clean
@@ -30,8 +28,6 @@ def clean_text(text):
     text = re.sub('@(\w+)', '', text) # Remove account handles
     text = re.sub('&amp;', '', text) # Remove ampersand from text
     text = text.lower()
-    doc = nlp(text)
-    text = " ".join([token.lemma_ for token in doc])
     return " ".join(text.split())
 
 
@@ -62,16 +58,21 @@ def predict_price_movement(tweets_list):
     corpus = list(map(clean_text, corpus))
     tfidf_matrix = vectorizer.transform(corpus)
 
-    # Use the trained labeller to find how many tweets have bullish sentiment
-    total_tweets = len(corpus)
+    # Use the trained labeller to find number of tweets of each sentiment
     bullish_tweets = 0
+    neutral_tweets = 0
+    bearish_tweets = 0
     for vector in tfidf_matrix:
         label = text_labeller.predict(vector)[0]
-        if label == BULLISH:
+        if label == 'positive':
             bullish_tweets += 1
+        elif label == 'neutral':
+            neutral_tweets += 1
+        elif label == 'negative':
+            bearish_tweets += 1
 
-    # Use number of bullish and total tweets to predict price movement direction
-    feature = [[bullish_tweets, total_tweets]]
+    # Use number of tweets of the 3 sentiments to predict price movement
+    feature = [[bullish_tweets, neutral_tweets, bearish_tweets]]
     prediction = int(price_predictor.predict(feature)[0])
     confidence_level = float(max(price_predictor.predict_proba(feature)[0]) * 100)
 
@@ -110,10 +111,10 @@ def get_top_tweets(tweets_list):
         # of the given list, append the tweet and the confidence score
         # of the prediction to the list of bullish/bearish tweets
         label = text_labeller.predict(vector)[0]
-        confidence_score = abs(text_labeller.decision_function(vector)[0])
-        if label == BULLISH:
+        confidence_score = abs(text_labeller.decision_function(vector).max())
+        if label == 'positive':
             bullish_tweets.append((tweets_list[i], confidence_score))
-        elif label == BEARISH:
+        elif label == 'negative':
             bearish_tweets.append((tweets_list[i], confidence_score))
     
 
