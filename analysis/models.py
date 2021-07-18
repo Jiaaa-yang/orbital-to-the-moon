@@ -82,10 +82,9 @@ def predict_price_movement(tweets_list):
 def get_top_tweets(tweets_list):
     """Get list of top bullish and bearish tweets from given tweets list.
 
-    Get the two lists of tweets from given tweets that have the highest confidence level
-    of being bullish and bearish. The returned list for each bullish and bearish tweets
-    are sorted such that the first element contains the tweet with the highest confidence
-    score to be bullish/bearish respectively.
+    Get the two lists of tweets from given tweets that have the highest number of likes
+    The returned list for each bullish and bearish tweets are sorted such that the 
+    first element contains the tweet with the highest number of likes
 
     Args:
         tweets_list (iterator): List of Tweet objects
@@ -108,18 +107,15 @@ def get_top_tweets(tweets_list):
     bearish_tweets = []
     for i, vector in enumerate(tfidf_matrix):
         # For each text corresponding to the Tweet at index i
-        # of the given list, append the tweet and the confidence score
-        # of the prediction to the list of bullish/bearish tweets
+        # of the given list, append the tweet to the list of bullish/bearish tweets
         label = text_labeller.predict(vector)[0]
-        confidence_score = abs(text_labeller.decision_function(vector).max())
         if label == 'positive':
-            bullish_tweets.append((tweets_list[i], confidence_score))
+            bullish_tweets.append(tweets_list[i])
         elif label == 'negative':
-            bearish_tweets.append((tweets_list[i], confidence_score))
+            bearish_tweets.append(tweets_list[i])
     
 
-    # Sort the tweets by confidence score such that the most bullish/bearish tweets 
-    # with the highest confidence score are first in the list
-    bullish_tweets = [tweet for tweet, _ in sorted(bullish_tweets, key=lambda pair: pair[1], reverse=True)]
-    bearish_tweets = [tweet for tweet, _ in sorted(bearish_tweets, key=lambda pair: pair[1], reverse=True)]
+    # Sort the tweets by number of likes such that the most liked tweets are first
+    bullish_tweets = sorted(bullish_tweets, key=lambda tweet: tweet.likes, reverse=True)
+    bearish_tweets = sorted(bearish_tweets, key=lambda tweet: tweet.likes, reverse=True)
     return bullish_tweets, bearish_tweets

@@ -34,7 +34,7 @@ def get_financial_tweets(symbol, result_type, n_items, date_range="all"):
 
     Yields:
         Tweet object which contains the tweet id, date of tweet, symbol
-            the tweet is associated with, and the text content
+            the tweet is associated with, number of likes, and the text content
     """
     # Query for twitter API to be symbol prepended with a '$' sign to get financial tweets
     query = f"${symbol} -filter:retweets"
@@ -46,4 +46,5 @@ def get_financial_tweets(symbol, result_type, n_items, date_range="all"):
                                since=TODAY.strftime("%Y-%m-%d"), tweet_mode="extended").items(n_items)
 
     for tweet in tweets:
-        yield Tweet(id=tweet.id, date=tweet.created_at.strftime("%Y-%m-%d"), symbol=symbol, text=tweet.full_text)
+        yield Tweet(id=tweet.id, date=tweet.created_at.strftime("%Y-%m-%d"), 
+        symbol=symbol, text=tweet.full_text, likes=tweet.favorite_count)

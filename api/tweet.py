@@ -11,9 +11,10 @@ class Tweet():
         date (str): Date where tweet was posted at, in YYYY-MM-DD format
         symbol (str): Symbol of stock the tweet is associated with
         text (str): Text content of the tweet
+        likes (int): Number of likes of current tweet
 
     """
-    def __init__(self, id, date, symbol, text):
+    def __init__(self, id, date, symbol, text, likes):
         """Constructor for a new tweet object
 
         Creates a new Tweet object with 'id', 'date', 'symbol' and
@@ -24,12 +25,14 @@ class Tweet():
             date (str): Date where tweet was posted at, in YYYY-MM-DD format
             symbol (str): Symbol of stock the tweet is associated with
             text (str): Text content of the tweet
+            likes (int): Number of likes of current tweet
 
         """
         self.id = id
         self.date = date
         self.symbol = symbol
         self.text = text
+        self.likes = likes
 
     
     def get_link(self):

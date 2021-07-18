@@ -6,9 +6,9 @@ from ..models import predict_price_movement, get_top_tweets, clean_text
 class TestModels(unittest.TestCase):
 
     def setUp(self):
-        tweet_one = Tweet(id='', date='', symbol='', text='$MSFT $AAPL $AMZN big three')
-        tweet_two = Tweet(id='', date='', symbol='', text='$AMD good action')
-        tweet_three = Tweet(id='', date='', symbol='', text='$MSFT $MSFT is good')
+        tweet_one = Tweet(id='', date='', symbol='', text='$MSFT $AAPL $AMZN big three', likes=0)
+        tweet_two = Tweet(id='', date='', symbol='', text='$AMD good action', likes=0)
+        tweet_three = Tweet(id='', date='', symbol='', text='$MSFT $MSFT is good', likes=0)
         self.test_tweets = [tweet_one, tweet_two, tweet_three]
 
 

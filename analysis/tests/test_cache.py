@@ -13,8 +13,8 @@ class TestModels(unittest.TestCase):
         self.result = {
             'is_bullish': True,
             'confidence_level': 0,
-            'bullish_tweets': [Tweet(id="0", date="2000-01-01", symbol=self.test_symbol, text="test text")],
-            'bearish_tweets': [Tweet(id="0", date="2000-01-01", symbol=self.test_symbol, text="test text")]
+            'bullish_tweets': [Tweet(id="0", date="2000-01-01", symbol=self.test_symbol, text="test text", likes=0)],
+            'bearish_tweets': [Tweet(id="0", date="2000-01-01", symbol=self.test_symbol, text="test text", likes=0)]
         }
 
 
