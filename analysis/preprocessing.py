@@ -22,9 +22,9 @@ def remove_bot_tweets(tweets_list):
 
     """
     # Phrases associated with tweets by bot accounts
-    bot_phrases = ['for real time prints', 'sec alert', '1 minute', '#options', 'companies in our database',
+    bot_phrases = {'for real time prints', 'sec alert', '1 minute', '#options', 'companies in our database',
                 'by the same day\'s market close', 'technical alerts', 'new alert', 'chatroom', 'trade alert',
-                'if you know trading around print', 'view odds for this', '15s. delayed', 'tradewithalerts']
+                'if you know trading around print', 'view odds for this', '15s. delayed', 'tradewithalerts'}
 
     # Lambda function to check if given text is likely to be a bot tweet
     # by checking if it contains any of the bot phrases
@@ -38,21 +38,20 @@ def remove_bot_tweets(tweets_list):
     return filtered_tweets
 
 
-def _num_symbols_mentioned(text):
-    """Get number of symbols mentioned in given text.
+def _num_symbols_mentioned(doc):
+    """Get number of symbols mentioned in given doc.
 
     Using spaCy's rule-based matcher, get the number of symbols
-    mentioned in given text. This is a probability model and may not find
-    all symbols mentioned in the text.
+    mentioned in given doc. This is a probability model and may not find
+    all symbols mentioned in the text content of given doc.
 
     Args:
-        text (str): Text content of tweet
+        text (Doc): Spacy's document object of given text
 
     Returns: 
         int: Number of symbols mentioned in the text
 
     """
-    doc = nlp(text)
     symbols_found = set()
     for _, start, end in matcher(doc):
         symbol = doc[start:end].text
@@ -75,9 +74,10 @@ def remove_multiple_symbol_tweets(tweets_list):
 
     """
     filtered_tweets = []
-    for tweet in tweets_list:
-        text = tweet.text
-        if _num_symbols_mentioned(text) <= 1:
-            filtered_tweets.append(tweet)
+    text_list = [tweet.text for tweet in tweets_list]
+    docs_list = nlp.pipe(text_list)
+    for i, doc in enumerate(docs_list):
+        if _num_symbols_mentioned(doc) <= 1:
+            filtered_tweets.append(tweets_list[i])
 
     return filtered_tweets

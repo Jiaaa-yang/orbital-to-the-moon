@@ -1,4 +1,5 @@
 from joblib import load
+import numpy as np
 import re
 
 
@@ -55,21 +56,14 @@ def predict_price_movement(tweets_list):
     # Convert list of tweets into vector of cleaned text content to
     # be transformed by vectorizer
     corpus = [tweet.text for tweet in tweets_list]
-    corpus = list(map(clean_text, corpus))
+    corpus = map(clean_text, corpus)
     tfidf_matrix = vectorizer.transform(corpus)
 
     # Use the trained labeller to find number of tweets of each sentiment
-    bullish_tweets = 0
-    neutral_tweets = 0
-    bearish_tweets = 0
-    for vector in tfidf_matrix:
-        label = text_labeller.predict(vector)[0]
-        if label == 'positive':
-            bullish_tweets += 1
-        elif label == 'neutral':
-            neutral_tweets += 1
-        elif label == 'negative':
-            bearish_tweets += 1
+    labels = text_labeller.predict(tfidf_matrix)
+    bullish_tweets = np.count_nonzero(labels == 'positive')
+    neutral_tweets = np.count_nonzero(labels == 'neutral')
+    bearish_tweets = np.count_nonzero(labels == 'negative')
 
     # Use number of tweets of the 3 sentiments to predict price movement
     feature = [[bullish_tweets, neutral_tweets, bearish_tweets]]
@@ -100,15 +94,15 @@ def get_top_tweets(tweets_list):
         return [], []
 
     corpus = [tweet.text for tweet in tweets_list]
-    corpus = list(map(clean_text, corpus))
+    corpus = map(clean_text, corpus)
     tfidf_matrix = vectorizer.transform(corpus)
     
     bullish_tweets = []
     bearish_tweets = []
-    for i, vector in enumerate(tfidf_matrix):
-        # For each text corresponding to the Tweet at index i
+    labels = text_labeller.predict(tfidf_matrix)
+    for i, label in enumerate(labels):
+        # For each label corresponding to the Tweet at index i
         # of the given list, append the tweet to the list of bullish/bearish tweets
-        label = text_labeller.predict(vector)[0]
         if label == 'positive':
             bullish_tweets.append(tweets_list[i])
         elif label == 'negative':
