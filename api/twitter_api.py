@@ -8,7 +8,6 @@ CONSUMER_KEY = getenv("TWITTER_CONSUMER_KEY")
 CONSUMER_SECRET = getenv("TWITTER_CONSUMER_SECRET")
 ACCESS_TOKEN = getenv("TWITTER_ACCESS_TOKEN")
 ACCESS_TOKEN_SECRET = getenv("TWITTER_ACCESS_TOKEN_SECRET")
-TODAY = datetime.now()
 
 # Tweepy authentication
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -36,6 +35,7 @@ def get_financial_tweets(symbol, result_type, n_items, date_range="all"):
         Tweet object which contains the tweet id, date of tweet, symbol
             the tweet is associated with, number of likes, and the text content
     """
+    today = datetime.utcnow()
     # Query for twitter API to be symbol prepended with a '$' sign to get financial tweets
     query = f"${symbol} -filter:retweets"
     if date_range == "all":
@@ -43,7 +43,7 @@ def get_financial_tweets(symbol, result_type, n_items, date_range="all"):
                                tweet_mode="extended").items(n_items)
     else:
         tweets = tweepy.Cursor(api.search, q=query, lang="en", result_type=result_type, 
-                               since=TODAY.strftime("%Y-%m-%d"), tweet_mode="extended").items(n_items)
+                               since=today.strftime("%Y-%m-%d"), tweet_mode="extended").items(n_items)
 
     for tweet in tweets:
         yield Tweet(id=tweet.id, date=tweet.created_at.strftime("%Y-%m-%d"), 

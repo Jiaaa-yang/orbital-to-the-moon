@@ -9,10 +9,6 @@ from api.article import Article
 news_access_url = "http://api.mediastack.com/v1/news"
 api_key = getenv("NEWS_API_KEY")
 
-# We will fix the query for news article to be at most 1 week old
-TODAY = datetime.now()
-WEEK_AGO = TODAY - timedelta(days=7)
-
 def get_financial_news(symbol, n_items):
     """Get financial news of given symbol.
 
@@ -30,6 +26,10 @@ def get_financial_news(symbol, n_items):
         with, and the url to the original article
 
     """
+    # We will fix the query for news article to be at most 1 week old
+    TODAY = datetime.now()
+    WEEK_AGO = TODAY - timedelta(days=7)
+
     search_params = {
             'access_key': api_key,
             'limit': n_items,
