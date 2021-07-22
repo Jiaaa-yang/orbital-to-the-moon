@@ -12,6 +12,12 @@ $(document).ready(function() {
     })
 })
 
+// Simulate a form submission on clicking of favourited stocks
+$(".favourite-stocks").click(function() {
+    symbol = this.innerHTML;
+    $("#search-form input").val(symbol);
+    $("#search-form").submit();
+})
 
 $(function() {
     $(".flex-item").click(function (event) {
