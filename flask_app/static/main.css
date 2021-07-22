@@ -90,6 +90,10 @@ ANALYSIS PAGE
     font-size: 1.4rem;
 }
 
+.add-favourites {
+    display: inline;
+}
+
 /*
 ABOUT PAGE
 */
@@ -144,7 +148,7 @@ ABOUT PAGE
 	text-decoration-thickness: 0.15rem;
 }
 
-.show {
+/* .show {
 	text-decoration: underline;
 	text-decoration-thickness: 0.15rem;
-}
+} */

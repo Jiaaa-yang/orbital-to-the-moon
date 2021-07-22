@@ -2,7 +2,12 @@
 
 {% block content %}
   <!-- Label for stock currently showing results for -->
-  <p class="ticker-label">Showing results for: {{ company_name }} ({{ symbol }})</p>
+  <div class="ticker-label">Showing results for: {{ company_name }} ({{ symbol }}) 
+      <form id='add-favourites' action="/add-favourites" method="POST">
+        <button type="submit" name="symbol" value={{ symbol }}><i class="far fa-star"></i></button>
+      </form>
+  </div> 
+
   <!-- Two square cards for emphasis of main results -->
   <div class="container-fluid row text-center">
     <div class="col-lg-6 d-flex justify-content-center">
