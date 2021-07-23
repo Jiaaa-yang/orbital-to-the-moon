@@ -18,6 +18,9 @@ def analysis(symbol):
     bearish_tweets_display = []
     news_article_display = []
 
+    # Whether current symbol is favourited by user in session information
+    is_favourite = symbol in session['favourites']
+
     # Use multithreading for the API calls required
     with ThreadPoolExecutor(max_workers=5) as executor:
         get_stock_info = lambda symbol: yf.Ticker(symbol).info
@@ -59,9 +62,9 @@ def analysis(symbol):
                                         'link': article.url})
         
 
-        return render_template('analysis.html', symbol=symbol, company_name=company_name, prediction=price_movement_prediction,
-        confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, bearish_tweets=bearish_tweets_display,
-        news=news_article_display)
+        return render_template('analysis.html', is_favourite=is_favourite, symbol=symbol, company_name=company_name, 
+        prediction=price_movement_prediction, confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, 
+        bearish_tweets=bearish_tweets_display, news=news_article_display)
 
 
 @bp.route('/add-favourites', methods=['GET', "POST"])

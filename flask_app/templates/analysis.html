@@ -4,7 +4,15 @@
   <!-- Label for stock currently showing results for -->
   <div class="ticker-label">Showing results for: {{ company_name }} ({{ symbol }}) 
       <form id='add-favourites' action="/add-favourites" method="POST">
-        <button type="submit" name="symbol" value={{ symbol }}><i class="far fa-star"></i></button>
+        <button type="submit" name="symbol" value={{ symbol }}>
+          {% if is_favourite %}
+            <!-- Solid star icon for favourited stock -->
+            <i class="fas fa-star"></i>
+          {% else %}
+            <!-- Hollow star icon for non-favourited stock -->
+            <i class="far fa-star"></i>
+          {% endif %}
+        </button>
       </form>
   </div> 
 
