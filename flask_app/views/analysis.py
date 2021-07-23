@@ -9,7 +9,7 @@ import yfinance as yf
 
 bp = Blueprint('analysis', __name__)
 
-@bp.route('/analysis')
+@bp.route('/analysis/<symbol>')
 def analysis(symbol):
     # Get up to 5 items to display for each section and pass them
     # as a list of dictionary with relevant data

@@ -12,11 +12,16 @@ $(document).ready(function() {
     })
 })
 
-// Simulate a form submission on clicking of favourited stocks
-$(".favourite-stocks").click(function() {
-    symbol = this.innerHTML;
-    $("#search-form input").val(symbol);
-    $("#search-form").submit();
+// Add loading text for clicking of favourited stock
+$(".favourite-stocks").click(function (event) {
+    link = this.href;
+    event.preventDefault();
+    $("#loading-text").removeClass('hide');
+    $("#main-content").addClass('hide');
+
+    setTimeout(function () {
+        window.location.href = link;
+    }, 100)
 })
 
 $(function() {

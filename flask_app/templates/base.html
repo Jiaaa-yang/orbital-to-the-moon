@@ -47,8 +47,8 @@
                 Favourites
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for stocks in session['favourites'] %}
-                  <li><a class="dropdown-item favourite-stocks" href="#">{{ stocks }}</a></li>
+                {% for stock in session['favourites'] %}
+                  <li><a class="dropdown-item favourite-stocks" href="{{ url_for('analysis.analysis', symbol=stock) }}">{{ stock }}</a></li>
                 {% endfor %}
               </ul>
             </li>
@@ -58,8 +58,11 @@
     </nav>
   </header>
 
+  <!-- Loading text for general use -->
+  <p class="centered hide" id="loading-text">Loading...</p>
+
   <!-- Main content section -->
-  <section>
+  <section id="main-content">
     {% block content %}{% endblock %}
   </section>
 
