@@ -101,8 +101,15 @@ ANALYSIS PAGE
     font-size: 1.4rem;
 }
 
-.add-favourites {
+#add-favourites {
     display: inline;
+}
+
+#add-favourites button {
+    color: #f9d71c;
+    border: none;
+    background: none;
+    padding: 0;
 }
 
 /*
