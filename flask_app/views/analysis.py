@@ -19,7 +19,7 @@ def analysis(symbol):
     news_article_display = []
 
     # Whether current symbol is favourited by user in session information
-    is_favourite = symbol in session['favourites']
+    is_favourite = symbol in session.get('favourites', [])
 
     # Use multithreading for the API calls required
     with ThreadPoolExecutor(max_workers=5) as executor:
@@ -70,12 +70,19 @@ def analysis(symbol):
 @bp.route('/add-favourites', methods=['GET', "POST"])
 def add_favourite():
     if request.method == 'POST':
-        # Add favourited stock to session info if it does not already exist
-        # and create a new list if session info is empty 
         symbol = request.form.to_dict()['symbol']
+        # Favourites list exist in session, add symbol to list if
+        # not already favourited, else remove it from list
         if session.get('favourites'):
-            if symbol not in session['favourites']:
-                session['favourites'] = session['favourites'] + [symbol]
+            favourites = session['favourites']
+            if symbol not in favourites:
+                favourites.append(symbol)
+            else:
+                favourites.remove(symbol)
+            
+            session['favourites'] = favourites
+
+        # Favourites list not in session, create new list with given symbol
         else:
             session['favourites'] = [symbol]
 
