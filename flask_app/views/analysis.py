@@ -2,14 +2,14 @@ from concurrent.futures import ThreadPoolExecutor
 from analysis.tweets_analysis import analyse_symbol
 from api.mediastack_api import get_financial_news
 from flask import (
-    Blueprint, redirect, render_template, flash
+    Blueprint, redirect, render_template, flash, request, session
 )
 import yfinance as yf
 
 
 bp = Blueprint('analysis', __name__)
 
-@bp.route('/analysis')
+@bp.route('/analysis/<symbol>')
 def analysis(symbol):
     # Get up to 5 items to display for each section and pass them
     # as a list of dictionary with relevant data
@@ -17,6 +17,9 @@ def analysis(symbol):
     bullish_tweets_display = []
     bearish_tweets_display = []
     news_article_display = []
+
+    # Whether current symbol is favourited by user in session information
+    is_favourite = symbol in session.get('favourites', [])
 
     # Use multithreading for the API calls required
     with ThreadPoolExecutor(max_workers=5) as executor:
@@ -59,6 +62,28 @@ def analysis(symbol):
                                         'link': article.url})
         
 
-        return render_template('analysis.html', symbol=symbol, company_name=company_name, prediction=price_movement_prediction,
-        confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, bearish_tweets=bearish_tweets_display,
-        news=news_article_display)
+        return render_template('analysis.html', is_favourite=is_favourite, symbol=symbol, company_name=company_name, 
+        prediction=price_movement_prediction, confidence_level=confidence_level, bullish_tweets=bullish_tweets_display, 
+        bearish_tweets=bearish_tweets_display, news=news_article_display)
+
+
+@bp.route('/add-favourites', methods=['GET', "POST"])
+def add_favourite():
+    if request.method == 'POST':
+        symbol = request.form.to_dict()['symbol']
+        # Favourites list exist in session, add symbol to list if
+        # not already favourited, else remove it from list
+        if session.get('favourites'):
+            favourites = session['favourites']
+            if symbol not in favourites:
+                favourites.append(symbol)
+            else:
+                favourites.remove(symbol)
+            
+            session['favourites'] = favourites
+
+        # Favourites list not in session, create new list with given symbol
+        else:
+            session['favourites'] = [symbol]
+
+        return analysis(symbol)

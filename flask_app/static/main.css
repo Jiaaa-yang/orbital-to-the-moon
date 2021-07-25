@@ -25,6 +25,17 @@ GENERAL
     display: none;
 }
 
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#loading-text {
+    font-size: 1.6rem;
+}
+
 /*
 HOMEPAGE
  */
@@ -90,6 +101,17 @@ ANALYSIS PAGE
     font-size: 1.4rem;
 }
 
+#add-favourites {
+    display: inline;
+}
+
+#add-favourites button {
+    color: #f9d71c;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
 /*
 ABOUT PAGE
 */
@@ -144,7 +166,7 @@ ABOUT PAGE
 	text-decoration-thickness: 0.15rem;
 }
 
-.show {
+/* .show {
 	text-decoration: underline;
 	text-decoration-thickness: 0.15rem;
-}
+} */
