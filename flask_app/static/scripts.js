@@ -30,3 +30,27 @@ $(function() {
         $(this).addClass("show");
     })
 })
+
+// AJAX scripts for displaying sample classification result in AI page
+$("#text-classifier-demo form").submit(function(event) {
+    event.preventDefault();
+    // Check whether it is the general sentiment or financial sentiment form
+    var formType = this.id;
+    var textInput;
+    if (formType == 'general-sentiment') {
+        textInput = $('#vader-input').val()
+    } else {
+        textInput = $('#linearsvc-input').val()
+    }
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            $(`#${formType} .demo-result`).html(this.responseText);
+        }
+    }
+
+    xhttp.open("POST", "/ai", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(`type=${formType}&input=${textInput}`);
+})

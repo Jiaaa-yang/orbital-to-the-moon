@@ -170,3 +170,10 @@ ABOUT PAGE
 	text-decoration: underline;
 	text-decoration-thickness: 0.15rem;
 } */
+
+/* 
+AI Page 
+*/
+#text-classifier-demo {
+    width: 70%;
+}

@@ -113,3 +113,28 @@ def get_top_tweets(tweets_list):
     bullish_tweets = sorted(bullish_tweets, key=lambda tweet: tweet.likes, reverse=True)
     bearish_tweets = sorted(bearish_tweets, key=lambda tweet: tweet.likes, reverse=True)
     return bullish_tweets, bearish_tweets
+
+
+def analyse_sentiment(text):
+    """Gets the financial sentiment of given text.
+
+    Returns the financial sentiment of the given text, along with the probability score
+    that of the model for the predicted class.
+
+    Args:
+        text (str): Text to analyse the sentiment for
+
+    Returns: 
+        tuple: Tuple with 2 elements, the first is a string representing the sentiment
+            of either 'positive', 'neutral' or 'negative'. The second is the probability score
+            given by the model.
+
+    """
+    text = clean_text(text)
+    tfidf_matrix = vectorizer.transform([text])
+
+    # Use the trained labeller to find number of tweets of each sentiment
+    label = text_labeller.predict(tfidf_matrix)[0]
+    probability = text_labeller.decision_function(tfidf_matrix).max()
+
+    return label, probability

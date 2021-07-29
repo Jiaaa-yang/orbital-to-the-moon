@@ -1,40 +1,72 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- 'About Us' page content -->
+<!-- 'AI' page content -->
 <div class="container-fluid" id="homepage-content" style="margin-top: -5em;">
   <div class="row align-items-center">
-     <div class="offset-lg-2 col-lg-8">
-	   <h2 class="highlight">More About the AI</h2>
-	 </div>
-    <div class="offset-lg-4 col-lg-4">
-	  <img src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1138781799%2F960x0.jpg" 
-	  class="center img-fluid" alt="Stock image of Twitter sentiment analysis">
-	</div>
+      <div class="offset-lg-2 col-lg-8">
+        <h2 class="highlight">Our AI</h2>
+      </div>
 
-	<!-- Start of text -->
-	<div class="offset-lg-2 col-lg-8 mt-2">
-	  <p>We developed two machine learning models:</p>
-	  <ol>
-	    <li>a LinearSVC model that classifies the financial sentiment of the text of a tweet.</li>
-		<li>a Random Forest Classifier which predicts whether the price of a stock will rise or fall, based on the tweets associated with the stock.</li>
-	  </ol>
-	  <p>To pass our text data into the LinearSVC model, we used a bag of words model by transforming 
-	  our corpus into a TF-IDF matrix. This model allows us to predict the financial sentiment of each 
-	  tweet with regards to the stock it is referring to.</p>
-	  <p>The Random Forest Classifier uses the first model to label each tweet associated with a particular stock. Then, 
-	  using the number of positive/bullish tweets on the stock, the model predicts whether this stock will 
-	  rise or fall.</p>
-	  <p>As of the time of writing, both models have an accuracy of about 61% for their binary 
-	  classification task. The accuracy will be worked on as more data is collected.</p>
-	  <p>Further elaboration on the full process of training the two models, as well as the 
-	  exploration of twitter data can be found in the following notebooks:</p>
-	  <ol>
-	    <li><a href="https://www.kaggle.com/lyejiayang/1-twitter-data-exploration">Tweets EDA</a></li>
-		<li><a href="https://www.kaggle.com/lyejiayang/2-tweets-classification">Tweets sentiment classification</a></li>
-		<li><a href="https://www.kaggle.com/lyejiayang/3-stock-price-prediction-with-tweets-sentiment">Stock price prediction</a></li>
-	  </ol>
-	</div>
+  <!-- Start of text -->
+    <div class="offset-lg-2 col-lg-8 mt-2">
+      <p>Artificial intelligence forms the core of our web application. In particular,
+        we have trained two machine learning models to use in our application. We make use of
+        <a href="https://scikit-learn.org/stable/", target="_blank">scikit-learn</a> for this purpose.
+      </p>
+      <p>
+        The first model is a <strong>Random Forest Classifier</strong> which predicts whether the stock of a price
+        will rise. This model is in charge of the main results shown whenever you search for the analysis of a stock. In this
+        case, the confidence level is a measure of the probability which the model thinks its prediction is correct,
+        based on data points it has previously seen.
+      </p>
+      <p>
+        The second model is a <strong>LinearSVC</strong> model which classifies tweets into those that have a positive financial
+        sentiment, and those with negative financial sentiments. While there are many pre-trained sentiment analysis models out there,
+        not many of them are fine-tuned for financial texts. Try comparing the sentiment classifier meant for normal text below (using 
+        <a href="https://github.com/cjhutto/vaderSentiment">vaderSentiment's</a> classifier), and the sentiment classifier that we have 
+        trained. You can see that our classifier is more suited for financial text, or tweets in our case.
+        <div id="text-classifier-demo">
+          <form id="general-sentiment">
+            <div>
+              <label for="vader-input" class="form-label highlight">General sentiment classifier</label>
+              <input type="text" class="form-control" id="vader-input" value="{{ demo_text }}">
+              <div class="form-text">Polarity score is a value between -1 and 1, where 1 represents the most positive sentiment</div>
+            </div>
+            <p class="demo-result"></p>
+          </form>
+
+          <form method="POST" class="mt-3" id="financial-sentiment">
+            <div>
+              <label for="linearsvc-input" class="form-label highlight">Financial sentiment classifier</label>
+              <input type="text" class="form-control" id="linearsvc-input" value="{{ demo_text }}">
+              <div class="form-text">The confidence score represenst the distance from the decision hyperplane in the LinearSVC
+                model, where a higher value means the model is more confident of its prediction
+              </div>
+            </div>
+            <p class="demo-result"></p>
+          </form>
+        </div>
+      </p>
+      <p class="mt-5">
+        For those interested in the technical details of our models, such as our data visualisation and training stages,
+        check out these Jupyter notebooks!
+        <ol>
+          <li>
+            <a href="https://www.kaggle.com/lyejiayang/1-twitter-data-exploration" target="_blank">Exploratory Data Analysis</a>
+          </li>
+          <li>
+            <a href="https://www.kaggle.com/lyejiayang/2-tweets-classification" target="_blank">Tweets classification</a>
+          </li>
+          <li>
+            <a href="https://www.kaggle.com/lyejiayang/3-stock-price-prediction-with-tweets-sentiment" target="_blank">Stock price prediction</a>
+          </li>
+          <li>
+            <a href="https://www.kaggle.com/lyejiayang/4-stock-price-prediction-with-finbert-sentiment" target="_blank">Price prediction with finBert sentiment</a>
+          </li>
+        </ol>
+      </p>
+    </div>
   </div>
 </div>
 {% endblock %}

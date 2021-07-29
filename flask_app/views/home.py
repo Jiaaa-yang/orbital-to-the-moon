@@ -2,8 +2,11 @@ from flask import (
     Blueprint, render_template, request
 )
 from .analysis import analysis
+from analysis.models import analyse_sentiment
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
+analyzer = SentimentIntensityAnalyzer()
 bp = Blueprint('index', __name__)
 
 @bp.route('/', methods=('GET', 'POST'))
@@ -14,14 +17,30 @@ def home():
 
     return render_template('index.html')
 
+
 @bp.route('/contact', methods=["GET"])
 def contact():
     return(render_template('contact.html'))
+
 
 @bp.route('/about', methods=["GET"])
 def about():
     return(render_template('about.html'))
 
-@bp.route('/ai', methods=["GET"])
+
+@bp.route('/ai', methods=["GET", "POST"])
 def ai():
-    return(render_template('ai.html'))
+    if request.method == 'POST':
+        input = request.form['input']
+        type = request.form['type']
+        if type == 'financial-sentiment':
+            sentiment, score = analyse_sentiment(input)
+            return f"{{Sentiment: {sentiment.upper()}, Confidence score: {'{:.2f}'.format(abs(score))}}}"
+
+        elif type == 'general-sentiment':
+            score = analyzer.polarity_scores(input)['compound']
+            return f"Polarity score: {score}"
+
+
+    demo_text = "$MSFT No reason to not pick up this bargain for a bullish reversal"
+    return(render_template('ai.html', demo_text=demo_text))

@@ -57,6 +57,7 @@ typer==0.3.2
 typing-extensions==3.10.0.0
 update-checker==0.18.0
 urllib3==1.26.5
+vaderSentiment==3.3.2
 wasabi==0.8.2
 websocket-client==1.0.1
 Werkzeug==2.0.1
