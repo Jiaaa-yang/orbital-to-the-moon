@@ -1,3 +1,16 @@
+// Utility function to get random integer between min (inclusive) and max (exclusive)
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min) ) + min;
+}
+
+// Store cursor position
+var mouseX = 200;
+var mouseY = 200;
+$(document).mousemove(function (event) {
+    mouseX = event.pageX;
+    mouseY = event.pageY;
+})
+
 // Add loading animation for search
 $(document).ready(function() {
     $("#search-form").submit(function (event) {
@@ -54,3 +67,33 @@ $("#text-classifier-demo form").submit(function(event) {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(`type=${formType}&input=${textInput}`);
 })
+
+// Move shooting star animation to position near cursor
+function shootingStarOnCursor() {
+    $("#shooting-star-container").css('left', mouseX);
+    $("#shooting-star-container").css('top', mouseY);
+    for (var i = 1; i <= 5; i++) {
+        randLeft = randInt(-400, 400);
+        randTop = randInt(-50, 50);
+        $(`.shooting-star:nth-child(${i})`).css('left', randLeft);
+        $(`.shooting-star:nth-child(${i})`).css('top', randTop);
+    }
+
+    $(".shooting-star").removeClass("shooting-star")
+    repeatAnimation();
+}
+
+// Function to repeat animation once previous animation has finished (marked by the
+// last shooting star)
+function repeatAnimation() {
+    var lastStar = document.getElementById("last-star");
+    lastStar.addEventListener("animationend", function() {
+        shootingStarOnCursor();
+        setTimeout(function() {
+            $(".night>div").addClass("shooting-star")
+        }, 50);
+    }, {once: true})
+
+}
+
+repeatAnimation();
