@@ -49,9 +49,13 @@
                 Favourites
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for stock in session['favourites'] %}
-                  <li><a class="dropdown-item favourite-stocks" href="{{ url_for('analysis.analysis', symbol=stock) }}">{{ stock }}</a></li>
-                {% endfor %}
+                {% if session['favourites'] == [] %}
+                    <li><a class="dropdown-item favourite-stocks disabled">No Stocks Added</a></li>
+                {% else %}
+                  {% for stock in session['favourites'] %}
+                    <li><a class="dropdown-item favourite-stocks" href="{{ url_for('analysis.analysis', symbol=stock) }}">{{ stock }}</a></li>
+                  {% endfor %}
+                {% endif %}
               </ul>
             </li>
           </ul>
