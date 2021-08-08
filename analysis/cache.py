@@ -1,7 +1,8 @@
+import pymongo
 from os import getenv
 from copy import deepcopy
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import datetime, timedelta
 from api.tweet import Tweet
 
 
@@ -84,3 +85,33 @@ def get_cached_analysis(symbol):
     result['bullish_tweets'] = [Tweet(**attributes) for attributes in result['bullish_tweets']]
     result['bearish_tweets'] = [Tweet(**attributes) for attributes in result['bearish_tweets']]
     return True, result
+
+
+def get_recommended_stocks():
+    """Gets recommended stocks from the cache
+
+    Query recommended stocks from the cache, which is defined as those
+    with a bullish prediction and is not older than 1 day ago. Also sorts
+    them by confidence level of the prediction such that the most
+    confident bullish prediction is first in the returned list 
+
+    Returns:
+        list: List of sorted dictionary with the following keys:
+            'symbol': symbol of stock of corresponding analysis result
+            'confidence_level': confidence level of the prediction
+            'datetime': datetime of this prediction, in DD-MM-YYYY HH:MM format
+
+    """
+    one_day_ago = datetime.now() - timedelta(days=1)
+    bullish_stocks = cache.find({'is_bullish': True, 'time': {"$gt": one_day_ago}}).sort('confidence_level', pymongo.DESCENDING)
+    recommended_stocks = []
+    for stock in bullish_stocks:
+        result = {
+            'symbol': stock['symbol'],
+            'confidence_level': "{:.2f}".format(stock['confidence_level']),
+            'datetime': (stock['time'] + timedelta(hours=8)).strftime("%d-%m-%Y %H:%M")
+        }
+        recommended_stocks.append(result)
+
+    # Return up to top ten bullish stocks
+    return recommended_stocks[:10]

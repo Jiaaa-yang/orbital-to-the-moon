@@ -4,6 +4,7 @@ from flask import (
 from .analysis import analysis
 from analysis.models import analyse_sentiment
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from analysis.cache import get_recommended_stocks
 
 
 analyzer = SentimentIntensityAnalyzer()
@@ -15,7 +16,8 @@ def home():
         ticker = request.form['ticker'].upper()
         return analysis(ticker)
 
-    return render_template('index.html')
+    recommended_stocks = get_recommended_stocks()
+    return render_template('index.html', recommended_stocks=recommended_stocks)
 
 
 @bp.route('/contact', methods=["GET"])

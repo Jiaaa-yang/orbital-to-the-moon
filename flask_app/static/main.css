@@ -36,6 +36,10 @@ GENERAL
     font-size: 1.6rem;
 }
 
+.grey-text {
+    color: #808080;
+}
+
 /*
 HOMEPAGE
  */
@@ -68,9 +72,19 @@ HOMEPAGE
 }
 
 .alert {
-	color: white;
-	font-size: 0.8rem;
-	font-weight: 400;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+/* RECOMMENDED STOCKS MODAL */
+.modal {
+    color: black;
+}
+
+.recommended-text {
+    font-size: 1.0rem;
+    color: #808080;
 }
 
 /*

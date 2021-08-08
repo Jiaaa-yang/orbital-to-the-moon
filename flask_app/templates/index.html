@@ -33,6 +33,7 @@
                 </button>
               </div>
             </div>
+            <p class="recommended-text form-text mt-3">Check out these <a href="" data-bs-toggle="modal" data-bs-target="#recommendedStocks">recommended</a> stocks!</p>
           </form>
         </div>
       </div>
@@ -48,6 +49,54 @@
             {% endif %}
           {% endwith %}
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recommended stocks modal -->
+<div class="modal fade" id="recommendedStocks" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Bullish stocks</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Below is a list of stocks that were given a bullish prediction by our model, searched by other
+          users within the past 24 hours.
+        </p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Stock symbol</th>
+              <th scope="col">Confidence level</th>
+              <th scope="col">Timestamp (GMT+8)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if recommended_stocks == [] %}
+              <tr>
+                <td class="grey-text" colspan="3">There seems to be no bullish stocks searched by our users so far :(</td>
+              </tr>
+            {% else %}
+              {% for stock in recommended_stocks %}
+                <tr>
+                  <td><a class="favourite-stocks" href="{{ url_for('analysis.analysis', symbol=stock.symbol) }}">{{ stock.symbol }}</a></td>
+                  <td>{{ stock.confidence_level }}%</td>
+                  <td>{{ stock.datetime }}</td>
+                </tr>
+              {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+        <div class="pt-5"><small>Note: If the prediction was fetched some time ago, the sentiment may change based on more recent tweets.
+          Check the most recent analysis by clicking on the link to the stocks!
+        </small></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
