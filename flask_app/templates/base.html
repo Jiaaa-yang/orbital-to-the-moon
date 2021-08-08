@@ -49,7 +49,7 @@
                 Favourites
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% if session['favourites'] == [] %}
+                {% if session.get('favourites', []) == [] %}
                     <li><a class="dropdown-item favourite-stocks disabled">No Stocks Added</a></li>
                 {% else %}
                   {% for stock in session['favourites'] %}
